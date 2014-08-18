@@ -1,5 +1,11 @@
+/**
+ * \file
+ * \brief   Fixed sized integer types, sparc(32) version
+ * \ingroup l4_basic_types
+ */
 /*
- * (c) 2010 Adam Lackorzynski <adam@os.inf.tu-dresden.de>,
+ * (c) 2008-2010 Adam Lackorzynski <adam@os.inf.tu-dresden.de>
+ *               Björn Döbel <doebel@os.inf.tu-dresden.de>
  *     economic rights: Technische Universität Dresden (Germany)
  *
  * This file is part of TUD:OS and distributed under the terms of the
@@ -17,28 +23,16 @@
  */
 #pragma once
 
-#include <l4/sys/types.h>
+#include_next <l4/sys/l4int.h>
 
 /**
- * \brief vCPU registers.
- * \ingroup l4_vcpu_api
+ * \addtogroup l4_basic_types
  */
-typedef struct l4_vcpu_regs_t
-{
-  l4_umword_t pfa;
-  l4_umword_t err;
+/*@{*/
 
-  l4_umword_t r[31];
-} l4_vcpu_regs_t;
+#define L4_MWORD_BITS           32            /**< Size of machine words in bits */
 
-/**
- * \brief vCPU message registers.
- * \ingroup l4_vcpu_api
- */
-typedef struct l4_vcpu_ipc_regs_t
-{
-  l4_msgtag_t tag;
-  l4_umword_t _d1[3];
-  l4_umword_t label;
-  l4_umword_t _d2[8];
-} l4_vcpu_ipc_regs_t;
+typedef unsigned int            l4_size_t;    /**< \brief Signed size type */
+typedef signed int              l4_ssize_t;   /**< \brief Unsigned size type */
+/*@}*/
+

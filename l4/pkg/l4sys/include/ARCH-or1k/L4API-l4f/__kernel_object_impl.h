@@ -1,5 +1,10 @@
+/**
+ * \file
+ * \brief  Low-level kernel functions for SPARC
+ */
 /*
- * (c) 2010 Adam Lackorzynski <adam@os.inf.tu-dresden.de>,
+ * (c) 2010    Adam Lackorzynski <adam@os.inf.tu-dresden.de>
+ *             Björn Döbel <doebel@os.inf.tu-dresden.de>
  *     economic rights: Technische Universität Dresden (Germany)
  *
  * This file is part of TUD:OS and distributed under the terms of the
@@ -17,28 +22,20 @@
  */
 #pragma once
 
-#include <l4/sys/types.h>
+#ifndef L4_SYSCALL_MAGIC_OFFSET
+#  define L4_SYSCALL_MAGIC_OFFSET	8
+#endif
+#define L4_SYSCALL_DEBUGGER		(-0x0000000C-L4_SYSCALL_MAGIC_OFFSET)
 
-/**
- * \brief vCPU registers.
- * \ingroup l4_vcpu_api
- */
-typedef struct l4_vcpu_regs_t
+
+L4_INLINE l4_msgtag_t
+l4_invoke_debugger(l4_cap_idx_t obj, l4_msgtag_t tag, l4_utcb_t *utcb) L4_NOTHROW
 {
-  l4_umword_t pfa;
-  l4_umword_t err;
+	l4_msgtag_t t;
+	(void)obj;
+	(void)tag;
+	(void)utcb;
+	t.raw = ~0;
+	return t;
+}
 
-  l4_umword_t r[31];
-} l4_vcpu_regs_t;
-
-/**
- * \brief vCPU message registers.
- * \ingroup l4_vcpu_api
- */
-typedef struct l4_vcpu_ipc_regs_t
-{
-  l4_msgtag_t tag;
-  l4_umword_t _d1[3];
-  l4_umword_t label;
-  l4_umword_t _d2[8];
-} l4_vcpu_ipc_regs_t;

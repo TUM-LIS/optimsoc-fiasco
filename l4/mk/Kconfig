@@ -25,6 +25,9 @@ config BUILD_ARCH_ppc32
 config BUILD_ARCH_sparc
 	bool "Sparc architecture (EXPERIMENTAL)"
 
+config BUILD_ARCH_or1k
+	bool "OpenRISC architecture (EXPERIMENTAL)"
+
 endchoice
 
 config BUILD_ARCH
@@ -34,6 +37,7 @@ config BUILD_ARCH
 	default "amd64" if BUILD_ARCH_amd64
 	default "ppc32" if BUILD_ARCH_ppc32
 	default "sparc" if BUILD_ARCH_sparc
+	default "or1k"  if BUILD_ARCH_or1k
 
 # currently we have nothing for abi linux, so just do not offer this option
 #choice
@@ -295,6 +299,21 @@ config CPU
 	default "niagara2"    if CPU_SPARC_NIAGARA2
 	default "niagara3"    if CPU_SPARC_NIAGARA3
 	default "niagara4"    if CPU_SPARC_NIAGARA4
+endif
+
+if BUILD_ARCH_or1k
+
+choice
+	prompt "CPU"
+	config CPU_OR1K_OR1K
+	bool "OpenRISC 1000"
+	depends on BUILD_ARCH_or1k
+
+
+config CPU
+	string
+	default "or1k" if CPU_OR1K
+endchoice
 endif
 
 choice

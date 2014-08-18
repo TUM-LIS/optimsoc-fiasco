@@ -1,5 +1,9 @@
+/**
+ * \file
+ * \brief  Syscall entry definitions.
+ */
 /*
- * (c) 2010 Adam Lackorzynski <adam@os.inf.tu-dresden.de>,
+ * (c) 2010 Adam Lackorzynski <adam@os.inf.tu-dresden.de>
  *     economic rights: Technische Universität Dresden (Germany)
  *
  * This file is part of TUD:OS and distributed under the terms of the
@@ -15,30 +19,14 @@
  * invalidate any other reasons why the executable file might be covered by
  * the GNU General Public License.
  */
-#pragma once
+#ifndef __L4SYS__ARCH_ARM__L4API_L4F__SYSCALL_DEFS_H__
+#define __L4SYS__ARCH_ARM__L4API_L4F__SYSCALL_DEFS_H__
 
-#include <l4/sys/types.h>
+#ifndef L4_SYSCALL_MAGIC_OFFSET
+#  define L4_SYSCALL_MAGIC_OFFSET	8
+#endif
+#define L4_SYSCALL_INVOKE		(-0x00000004-L4_SYSCALL_MAGIC_OFFSET)
+#define L4_SYSCALL_MEM_OP               (-0x00000008-L4_SYSCALL_MAGIC_OFFSET)
+#define L4_SYSCALL_DEBUGGER		(-0x0000000C-L4_SYSCALL_MAGIC_OFFSET)
 
-/**
- * \brief vCPU registers.
- * \ingroup l4_vcpu_api
- */
-typedef struct l4_vcpu_regs_t
-{
-  l4_umword_t pfa;
-  l4_umword_t err;
-
-  l4_umword_t r[31];
-} l4_vcpu_regs_t;
-
-/**
- * \brief vCPU message registers.
- * \ingroup l4_vcpu_api
- */
-typedef struct l4_vcpu_ipc_regs_t
-{
-  l4_msgtag_t tag;
-  l4_umword_t _d1[3];
-  l4_umword_t label;
-  l4_umword_t _d2[8];
-} l4_vcpu_ipc_regs_t;
+#endif /* __L4SYS__ARCH_ARM__L4API_L4F__SYSCALL_DEFS_H__ */

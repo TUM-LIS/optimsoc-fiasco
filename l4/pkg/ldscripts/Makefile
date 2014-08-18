@@ -29,6 +29,7 @@ UCLIBC_ARCH_arm   := arm
 UCLIBC_ARCH_amd64 := x86_64
 UCLIBC_ARCH_ppc32 := powerpc
 UCLIBC_ARCH_sparc := sparc
+UCLIBC_ARCH_or1k  := or1k
 UCLIBC_BASE       = $(PKGDIR)/../uclibc
 UCLIBC_SYSDEPS    = $(UCLIBC_BASE)/lib/contrib/uclibc/libc/sysdeps/linux/$(UCLIBC_ARCH_$(ARCH))
 

@@ -95,7 +95,13 @@ typedef	l4_int64_t	Elf64_Sxword; /**< size 8 align 8 \ingroup l4util_elf*/
 #define L4_ARCH_E_MACHINE    EM_SPARC
 #define L4_ARCH_EI_CLASS     ELFCLASS32
 #else
+#ifdef ARCH_or1k
+#define L4_ARCH_EI_DATA      ELFDATA2MSB
+#define L4_ARCH_E_MACHINE    EM_OR1K
+#define L4_ARCH_EI_CLASS     ELFCLASS32
+#else
 #warning elf.h: Unsupported build architecture!
+#endif
 #endif
 #endif
 #endif
@@ -233,6 +239,7 @@ typedef struct {
 #define EM_COLDFIRE	52	/**< Motorola Coldfire */
 #define EM_68HC12	53	/**< Motorola M68HC12 */
 #define EM_AMD64	62
+#define EM_OR1K     666 // TODO
 
 #if 0
 #define EM_ALPHA	0x9026	/* interium value used by Linux until the

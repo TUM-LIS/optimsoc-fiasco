@@ -485,6 +485,9 @@ ifeq ($(TARGET_ARCH),v850)
       SYMBOL_PREFIX=_
 endif
 
+ifeq ($(TARGET_ARCH),or1k)
+endif
+
 # Keep the check_gcc from being needlessly executed
 ifndef PIEFLAG
 export PIEFLAG:=$(call check_gcc,$(PIEFLAG_NAME),$(PICFLAG))

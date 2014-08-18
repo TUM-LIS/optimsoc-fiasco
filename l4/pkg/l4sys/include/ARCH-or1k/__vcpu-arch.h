@@ -1,5 +1,6 @@
 /*
- * (c) 2010 Adam Lackorzynski <adam@os.inf.tu-dresden.de>,
+ * (c) 2009 Adam Lackorzynski <adam@os.inf.tu-dresden.de>,
+ *          Alexander Warg <warg@os.inf.tu-dresden.de>
  *     economic rights: Technische Universität Dresden (Germany)
  *
  * This file is part of TUD:OS and distributed under the terms of the
@@ -28,7 +29,13 @@ typedef struct l4_vcpu_regs_t
   l4_umword_t pfa;
   l4_umword_t err;
 
-  l4_umword_t r[31];
+  l4_umword_t r[13];
+
+  l4_umword_t sp;
+  l4_umword_t lr;
+  l4_umword_t _dummy;
+  l4_umword_t ip;
+  l4_umword_t flags;
 } l4_vcpu_regs_t;
 
 /**

@@ -1,5 +1,5 @@
 /*
- * (c) 2010 Adam Lackorzynski <adam@os.inf.tu-dresden.de>,
+ * (c) 2009 Adam Lackorzynski <adam@os.inf.tu-dresden.de>
  *     economic rights: Technische Universität Dresden (Germany)
  *
  * This file is part of TUD:OS and distributed under the terms of the
@@ -15,30 +15,9 @@
  * invalidate any other reasons why the executable file might be covered by
  * the GNU General Public License.
  */
-#pragma once
 
-#include <l4/sys/types.h>
+EXTERN_C long int
+l4_atomic_add(volatile long int* mem, long int offset) L4_NOTHROW;
 
-/**
- * \brief vCPU registers.
- * \ingroup l4_vcpu_api
- */
-typedef struct l4_vcpu_regs_t
-{
-  l4_umword_t pfa;
-  l4_umword_t err;
-
-  l4_umword_t r[31];
-} l4_vcpu_regs_t;
-
-/**
- * \brief vCPU message registers.
- * \ingroup l4_vcpu_api
- */
-typedef struct l4_vcpu_ipc_regs_t
-{
-  l4_msgtag_t tag;
-  l4_umword_t _d1[3];
-  l4_umword_t label;
-  l4_umword_t _d2[8];
-} l4_vcpu_ipc_regs_t;
+EXTERN_C long int
+l4_atomic_cmpxchg(volatile long int* mem, long int oldval, long int newval) L4_NOTHROW;

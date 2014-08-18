@@ -36,6 +36,7 @@ $(if $(ROLE),$(OBJ_DIR)/.general.d: $(L4DIR)/mk/$(ROLE))
 SYSTEM_TARGET_arm     = arm-linux-
 SYSTEM_TARGET_ppc32   = powerpc-linux-
 SYSTEM_TARGET_sparc   = $(if $(GCCIS_sparc_leon),sparc-elf-,sparc-linux-)
+SYSTEM_TARGET_or1k    = or1k-linux-uclibc-
 SYSTEM_TARGET         = $(SYSTEM_TARGET_$(ARCH))
 
 CARCHFLAGS_amd64    = -mno-red-zone
@@ -47,12 +48,14 @@ LD_EMULATION_CHOICE_arm     = armelf armelf_linux_eabi
 LD_EMULATION_CHOICE_ppc32   = elf32ppc
 LD_EMULATION_CHOICE_x86     = elf_i386
 LD_EMULATION_CHOICE_sparc   = $(if $(GCCIS_sparc_leon),sparcleon,elf32_sparc)
+LD_EMULATION_CHOICE_or1k    = elf32or1k_linux
 
 OFORMAT_amd64     = elf64-x86-64
 OFORMAT_arm       = elf32-littlearm
 OFORMAT_ppc32     = elf32-powerpc
 OFORMAT_x86       = elf32-i386
 OFORMAT_sparc     = elf32-sparc
+OFORMAT_or1k      = elf32-or1k
 OFORMAT           = $(OFORMAT_$(ARCH))
 
 BFD_ARCH_amd64    = i386
@@ -60,6 +63,7 @@ BFD_ARCH_arm      = arm
 BFD_ARCH_ppc32    = powerpc
 BFD_ARCH_x86      = i386
 BFD_ARCH_sparc    = sparc
+BFD_ARCH_or1k     = or1k
 BFD_ARCH          = $(BFD_ARCH_$(ARCH))
 
 L4_KIP_ADDR_amd64   ?= 0x6ffff000
@@ -67,6 +71,7 @@ L4_KIP_ADDR_arm     ?= 0xaffff000
 L4_KIP_ADDR_ppc32   ?= 0xaffff000
 L4_KIP_ADDR_x86     ?= 0xaffff000
 L4_KIP_ADDR_sparc   ?= 0xaffff000
+L4_KIP_ADDR_or1k    ?= 0xaffff000
 L4_KIP_ADDR         ?= $(L4_KIP_ADDR_$(ARCH))
 
 L4_KIP_OFFS_SYS_INVOKE   = 0x800
@@ -77,6 +82,7 @@ L4_STACK_ADDR_arm       ?= 0xb0000000
 L4_STACK_ADDR_ppc32     ?= 0xb0000000
 L4_STACK_ADDR_x86       ?= 0xb0000000
 L4_STACK_ADDR_sparc     ?= 0xb0000000
+L4_STACK_ADDR_or1k      ?= 0xb0000000
 L4_STACK_ADDR           ?= $(L4_STACK_ADDR_$(ARCH))
 L4_STACK_SIZE           ?= $(if $(L4_STACK_SIZE_MAIN_THREAD),$(L4_STACK_SIZE_MAIN_THREAD),0x8000)
 
@@ -157,19 +163,21 @@ CC_amd64        = $(SYSTEM_TARGET)gcc
 CC_arm          = $(SYSTEM_TARGET)gcc
 CC_ppc32        = $(SYSTEM_TARGET)gcc
 CC_sparc        = $(SYSTEM_TARGET)gcc
+CC_or1k         = $(SYSTEM_TARGET)gcc
 CXX_x86         = $(SYSTEM_TARGET)g++
 CXX_amd64       = $(SYSTEM_TARGET)g++
 CXX_arm         = $(SYSTEM_TARGET)g++
 CXX_ppc32       = $(SYSTEM_TARGET)g++
 CXX_sparc       = $(SYSTEM_TARGET)g++
+CXX_or1k        = $(SYSTEM_TARGET)g++
 FC_x86          = $(SYSTEM_TARGET)gfortran
 FC_amd64        = $(SYSTEM_TARGET)gfortran
 FC_arm          = $(SYSTEM_TARGET)gfortran
 FC_ppc32        = $(SYSTEM_TARGET)gfortran
 FC_sparc        = $(SYSTEM_TARGET)gfortran
 
-SYSTEMS_ABI    := x86-l4f amd64-l4f arm-l4f ppc32-l4f sparc-l4f
-SYSTEMS_PLAIN  := x86     amd64     arm     ppc32     sparc
+SYSTEMS_ABI    := x86-l4f amd64-l4f arm-l4f ppc32-l4f sparc-l4f or1k-l4f
+SYSTEMS_PLAIN  := x86     amd64     arm     ppc32     sparc     or1k
 
 dv               = $(if $(filter-out default undefined,$(origin $(1))),$(1)-default,$(1))
 

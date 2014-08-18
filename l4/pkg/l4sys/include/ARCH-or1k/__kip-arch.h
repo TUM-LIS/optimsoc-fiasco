@@ -1,5 +1,5 @@
 /*
- * (c) 2010 Adam Lackorzynski <adam@os.inf.tu-dresden.de>,
+ * (c) 2013 Adam Lackorzynski <adam@os.inf.tu-dresden.de>,
  *     economic rights: Technische Universität Dresden (Germany)
  *
  * This file is part of TUD:OS and distributed under the terms of the
@@ -17,28 +17,5 @@
  */
 #pragma once
 
-#include <l4/sys/types.h>
-
-/**
- * \brief vCPU registers.
- * \ingroup l4_vcpu_api
- */
-typedef struct l4_vcpu_regs_t
-{
-  l4_umword_t pfa;
-  l4_umword_t err;
-
-  l4_umword_t r[31];
-} l4_vcpu_regs_t;
-
-/**
- * \brief vCPU message registers.
- * \ingroup l4_vcpu_api
- */
-typedef struct l4_vcpu_ipc_regs_t
-{
-  l4_msgtag_t tag;
-  l4_umword_t _d1[3];
-  l4_umword_t label;
-  l4_umword_t _d2[8];
-} l4_vcpu_ipc_regs_t;
+struct l4_kip_platform_info_arch
+{};

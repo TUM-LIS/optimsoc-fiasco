@@ -68,6 +68,11 @@
 #define ELFCLASSM	ELFCLASS32
 #endif
 
+#if defined(__or1k__)
+#define MATCH_MACHINE(x) (x == EM_OR1K)
+#define ELFCLASSM	ELFCLASS32
+#endif
+
 #if defined(__powerpc64__)
 #define MATCH_MACHINE(x) (x == EM_PPC64)
 #define ELFCLASSM	ELFCLASS64

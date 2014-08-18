@@ -1,0 +1,4 @@
+#ifndef __L4UTIL_BITOPS_ARCH_OR1K_H
+#define __L4UTIL_BITOPS_ARCH_OR1K_H
+
+#endif

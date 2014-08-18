@@ -15,6 +15,7 @@ SRC_CC                       = kobject.cc
 SRC_S_libl4sys-arm          += ARCH-arm/atomic_ops_s.S
 SRC_C_libl4sys-ppc32        += ARCH-ppc32/atomic_ops.c
 SRC_S_libl4sys-sparc        += ARCH-sparc/atomic_ops.S
+SRC_S_libl4sys-or1k         += ARCH-or1k/atomic_ops.S
 
 SRC_S_libl4sys-direct.so     =
 SRC_S_libl4sys-direct.a-x86  = syscalls_direct.S

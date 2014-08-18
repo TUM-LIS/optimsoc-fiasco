@@ -11,6 +11,7 @@ DEFAULT_RELOC_x86   := 0x00100000
 DEFAULT_RELOC_amd64 := 0x00100000
 DEFAULT_RELOC_arm   := 0x00090000
 DEFAULT_RELOC_sparc := 0x01200000
+DEFAULT_RELOC_or1k  := 0x01200000
 DEFAULT_RELOC_ppc32 := 0x00100000
 RELOC_PHYS          := y
 
@@ -23,6 +24,7 @@ SRC_CC_amd64-l4f := ioports_x86.cc
 SRC_CC_arm-l4f   := ioports_none.cc
 SRC_CC_ppc32-l4f := ioports_none.cc
 SRC_CC_sparc-l4f := ioports_none.cc
+SRC_CC_or1k-l4f := ioports_none.cc
 SRC_C  := support.c
 SRC_S  := $(addprefix ARCH-$(ARCH)/, crt0.S)
 

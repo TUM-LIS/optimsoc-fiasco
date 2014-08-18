@@ -1,5 +1,11 @@
+/*****************************************************************************/
+/*!
+ * \file    l4sys/include/ARCH-sparc/consts.h
+ * \brief   Common L4 constants, sparc version
+ * \ingroup api_types_sparc
+ */
 /*
- * (c) 2010 Adam Lackorzynski <adam@os.inf.tu-dresden.de>,
+ * (c) 2009 Adam Lackorzynski <adam@os.inf.tu-dresden.de>
  *     economic rights: Technische Universität Dresden (Germany)
  *
  * This file is part of TUD:OS and distributed under the terms of the
@@ -15,30 +21,25 @@
  * invalidate any other reasons why the executable file might be covered by
  * the GNU General Public License.
  */
-#pragma once
+/*****************************************************************************/
+#ifndef _L4_SYS_CONSTS_H
+#define _L4_SYS_CONSTS_H
 
-#include <l4/sys/types.h>
-
-/**
- * \brief vCPU registers.
- * \ingroup l4_vcpu_api
- */
-typedef struct l4_vcpu_regs_t
-{
-  l4_umword_t pfa;
-  l4_umword_t err;
-
-  l4_umword_t r[31];
-} l4_vcpu_regs_t;
+/* L4 includes */
+#include <l4/sys/l4int.h>
 
 /**
- * \brief vCPU message registers.
- * \ingroup l4_vcpu_api
+ * Sizeof a page in log2
+ * \ingroup api_types_common
  */
-typedef struct l4_vcpu_ipc_regs_t
-{
-  l4_msgtag_t tag;
-  l4_umword_t _d1[3];
-  l4_umword_t label;
-  l4_umword_t _d2[8];
-} l4_vcpu_ipc_regs_t;
+#define L4_PAGESHIFT		13
+
+/**
+ * Sizeof a large page in log2
+ * \ingroup api_types_common
+ */
+#define L4_SUPERPAGESHIFT	22
+
+#include_next <l4/sys/consts.h>
+
+#endif /* !_L4_SYS_CONSTS_H */
