@@ -180,7 +180,7 @@ source:
 	test -e source || ln -sf $(srcdir) source
 
 
-BSP_DIR            := $(srcdir)/kern/arm/bsp $(srcdir)/kern/ppc32/bsp $(srcdir)/kern/sparc/bsp
+BSP_DIR            := $(srcdir)/kern/arm/bsp $(srcdir)/kern/ppc32/bsp $(srcdir)/kern/sparc/bsp $(srcdir)/kern/or1k/bsp
 KCONFIG_FILE       := Kconfig
 KCONFIG_SRC_FILE   := $(srcdir)/Kconfig
 KCONFIG_BSP_FILES  := $(shell find $(BSP_DIR) -name Kconfig -follow -print)
@@ -194,6 +194,7 @@ kconfig_call = $(MAKE) -C $(tooldir)/kconfig O=$(objbase) \
 	       KERNELVERSION=SVN MENUCONFIG_COLOR=blackbg \
 	       INCLUDE_PPC32=$(INCLUDE_PPC32) \
 	       INCLUDE_SPARC=$(INCLUDE_SPARC) \
+	       INCLUDE_OR1K=$(INCLUDE_OR1K) \
 	       fiasco_srcdir=$(srcdir)/..
 
 $(KCONFIG_FILE): $(KCONFIG_SRC_FILE) $(KCONFIG_BSP_FILES) $(srcdir)/Makefile

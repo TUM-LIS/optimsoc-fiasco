@@ -1,0 +1,9 @@
+# -*- makefile -*-
+# vi:se ft=make:
+
+SYSTEM_TARGET			?= or1k-elf-
+LD_EMULATION_CHOICE		:= elf32or1k
+
+# TODO: Search for a way to include or1k-support.h without
+# the necessity have stdinc (as we have own libc)
+L4STD_INCDIR = 

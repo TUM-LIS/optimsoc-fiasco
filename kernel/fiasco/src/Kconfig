@@ -18,6 +18,12 @@ config INCLUDE_SPARC
 	help
 	  Use "INCLUDE_SPARC=y make config" to include sparc options.
 
+config INCLUDE_OR1K
+	bool
+	option env="INCLUDE_OR1K"
+	help
+	  Use "INCLUDE_OR1K=y make config" to include OpenRISC options.
+
 menu "Target configuration"
 
 choice
@@ -51,6 +57,11 @@ config SPARC
 	  It is unsupported at the moment.
 	select CONTEXT_4K
 
+config OR1K
+	bool "OpenRISC 1000 processor family (Caution: EXPERIMENTAL)"
+	depends on EXPERIMENTAL && INCLUDE_OR1K
+	help
+	  Support OpenRISC 1000 processor cores
 
 endchoice
 
@@ -64,6 +75,7 @@ choice
 	default PF_PC         if AMD64
 	default PF_MP52CXX    if PPC32
 	default PF_LEON3      if SPARC
+	default PF_OR1KSIM    if OR1K
 
 config PF_PC
 	bool "PC platform"
@@ -133,6 +145,7 @@ choice
 	default AMD64_K8   if AMD64
 	default PPC32_603e if PPC32
 	default LEON3      if SPARC
+	default OR1200     if OR1K
 
 config ARM_PXA
 	bool "Intel XScale"
@@ -297,7 +310,15 @@ config LEON3
 	depends on SPARC
 	help
 	  Choose this if you have a LEON3 CPU.
+
+config OR1200
+        bool "OR1200 core"
+        depends on OR1K
+	help
+	  Choose if you have an OR1200 or or1ksim
+
 endchoice
+
 
 config CPU_VIRT
 	bool "Enable CPU virtualization (SVM and VT)"
@@ -653,7 +674,7 @@ config WATCHDOG
 
 config SERIAL
 	bool "Support for debugging over serial line"
-	depends on PF_PC || ARM || PPC32 || SPARC
+	depends on PF_PC || ARM || PPC32 || SPARC || OR1K
 	default y
 	help
 	  This option enables support for input/output over serial interface.
@@ -800,7 +821,7 @@ config PERF_CNT
 	def_bool y if JDB && (IA32 || AMD64 || ARM)
 
 config BIT32
-	def_bool y if ARM || IA32 || PPC32 || SPARC
+	def_bool y if ARM || IA32 || PPC32 || SPARC || OR1K
 
 config BIT64
 	def_bool y if AMD64
@@ -829,6 +850,7 @@ config XARCH
 	default "ia32" if IA32 && PF_PC
 	default "ppc32" if PPC32
 	default "sparc" if SPARC
+        default "or1k" if OR1K
 
 config IA32_TARGET
 	string

@@ -1,0 +1,10 @@
+
+CONFIG_KERNEL_LOAD_ADDR := 0x00000000
+
+PREPROCESS_PARTS	+= uart_or1ksim
+config_IMPL		+= config-or1k-or1ksim
+uart_IMPL		+= uart-or1ksim
+pic_IMPL		+= pic-or1k-or1ksim
+boot_info_IMPL		+= boot_info-or1k-or1ksim
+clock_IMPL		+= clock-generic
+timer_tick_IMPL		+= timer_tick-single-vector timer_tick-or1k

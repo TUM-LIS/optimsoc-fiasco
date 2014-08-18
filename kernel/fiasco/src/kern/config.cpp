@@ -140,6 +140,10 @@ INTERFACE[sparc]:
 #define ARCH_NAME "sparc"
 #define TARGET_NAME ""
 
+INTERFACE[or1k]:
+#define ARCH_NAME "or1k"
+#define TARGET_NAME ""
+
 INTERFACE:
 #define CONFIG_KERNEL_VERSION_STRING \
   GREETING_COLOR_ANSI_TITLE "Welcome to Fiasco.OC (" CONFIG_XARCH ")!\\n"            \
