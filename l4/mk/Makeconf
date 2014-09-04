@@ -33,7 +33,7 @@ all::
 # make .general.d dependent on the role-file
 $(if $(ROLE),$(OBJ_DIR)/.general.d: $(L4DIR)/mk/$(ROLE))
 
-SYSTEM_TARGET_arm     = arm-linux-
+SYSTEM_TARGET_arm     = arm-linux-gnueabi-
 SYSTEM_TARGET_ppc32   = powerpc-linux-
 SYSTEM_TARGET_sparc   = $(if $(GCCIS_sparc_leon),sparc-elf-,sparc-linux-)
 SYSTEM_TARGET_or1k    = or1k-linux-uclibc-
