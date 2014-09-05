@@ -32,7 +32,7 @@
  * Sizeof a page in log2
  * \ingroup api_types_common
  */
-#define L4_PAGESHIFT		13
+#define L4_PAGESHIFT		12
 
 /**
  * Sizeof a large page in log2

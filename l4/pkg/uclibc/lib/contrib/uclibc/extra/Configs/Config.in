@@ -28,6 +28,7 @@ choice
 	default TARGET_mips if DESIRED_TARGET_ARCH = "mips"
 	default TARGET_nios if DESIRED_TARGET_ARCH = "nios"
 	default TARGET_nios2 if DESIRED_TARGET_ARCH = "nios2"
+	default TARGET_or1k if DESIRED_TARGET_ARCH = "or1k"
 	default TARGET_powerpc if DESIRED_TARGET_ARCH = "powerpc"
 	default TARGET_sh if DESIRED_TARGET_ARCH = "sh"
 	default TARGET_sh64 if DESIRED_TARGET_ARCH = "sh64"
@@ -89,6 +90,9 @@ config TARGET_nios
 
 config TARGET_nios2
 	bool "nios2"
+
+config TARGET_or1k
+	bool "or1k"
 
 config TARGET_powerpc
 	bool "powerpc"
@@ -185,6 +189,10 @@ endif
 
 if TARGET_mips
 source "extra/Configs/Config.mips"
+endif
+
+if TARGET_or1k
+source "extra/Configs/Config.or1k"
 endif
 
 if TARGET_powerpc
