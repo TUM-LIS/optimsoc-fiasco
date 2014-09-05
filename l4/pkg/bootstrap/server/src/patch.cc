@@ -43,6 +43,10 @@
 #include "ARCH-sparc/macros.h"
 #endif
 
+#ifdef ARCH_or1k
+#include "ARCH-or1k/macros.h"
+#endif
+
 #include "types.h"
 #include "patch.h"
 #include "startup.h"

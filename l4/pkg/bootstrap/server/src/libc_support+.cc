@@ -187,6 +187,19 @@ void __main()
 }
 #endif
 
+#if defined(ARCH_or1k)
+extern "C" void __main();
+void __main()
+{ 
+  // TODO: Looks nice, but check
+  asm("l.sys 0x0815");
+  clear_bss();
+  ctor_init();
+  Platform_base::iterate_platforms();
+  startup(0, 0, 0, 0);
+}
+#endif
+
 void exit(int c) throw()
 {
   _exit(c);

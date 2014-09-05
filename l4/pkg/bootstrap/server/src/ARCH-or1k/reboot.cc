@@ -5,10 +5,16 @@
  * Please see the COPYING-LGPL-2.1 file for details.
  */
 
-#include <spr-defs.h>
+#include "support.h"
 
-_reboot_arch:
-    l.ori   r1, r0, 0x100
-    l.mtspr r0, r1, SPR_EPCR_BASE
-    l.rfe
-    l.nop
+void
+reboot_arch(void) __attribute__((noreturn));
+
+void
+reboot_arch(void)
+{
+  Platform_base::platform->reboot();
+
+  while (1)
+    ;
+}
