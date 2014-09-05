@@ -43,9 +43,9 @@ class Platform_or1ksim : public Platform_base
 
   void setup_memory_map(l4util_mb_info_t *, Region_list *ram, Region_list *)
   {
-      asm ("l.trap");
+      asm ("l.sys 0x0815");
   }
 };
 }
 
-REGISTER_PLATFORM(Platform_leon3);
+REGISTER_PLATFORM(Platform_or1ksim);

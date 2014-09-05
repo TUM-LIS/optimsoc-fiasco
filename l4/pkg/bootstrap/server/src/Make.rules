@@ -19,6 +19,7 @@ DEFAULT_RELOC_x86   := 0x002d0000
 DEFAULT_RELOC_amd64 := 0x002d0000
 DEFAULT_RELOC_ppc32 := 0x002d0000
 DEFAULT_RELOC_sparc := 0x00800000
+DEFAULT_RELOC_or1k  := 0x00000000
 RELOC_PHYS          := y
 LDFLAGS              = -Bstatic
 EXTRA_GENERAL_D_DEP += .redo-change-tracker $(BID_RAM_BASE_DEP) \
@@ -48,8 +49,8 @@ BOOTSTRAP_ELF_NAME           ?= bootstrap.elf
 MKIMAGE                      ?= mkimage
 BOOTSTRAP_UIMAGE_COMPRESSION ?= none
 
-ifeq ($(BUILD_ARCH),$(filter $(BUILD_ARCH),arm ppc32 sparc))
-  # ARM/PPC/SPARC always uses single image mode
+ifeq ($(BUILD_ARCH),$(filter $(BUILD_ARCH),arm ppc32 sparc or1k))
+  # ARM/PPC/SPARC/OR1K always uses single image mode
   # when no entry is given we build the useless auto-build target
   ifeq ($(E)$(ENTRY),)
     BOOTSTRAP_ELF_NAME := bootstrap.auto-build-useless.elf
@@ -84,6 +85,7 @@ SRC_CC_arm     	+= ARCH-arm/reboot.cc
 SRC_CC_ppc32    += ARCH-ppc32/init_kip_v2-arch.cc \
 		   ARCH-ppc32/reboot.cc
 SRC_CC_sparc	+= ARCH-sparc/reboot.cc
+SRC_CC_or1k     += ARCH-or1k/reboot.cc
 SRC_CC          += $(SUPPORT_CC_$(ARCH)-$(PLATFORM_TYPE))
 SRC_S		+= ARCH-$(ARCH)/crt0.S
 
@@ -140,6 +142,9 @@ ifeq ($(ARCH),sparc)
 LOADER_MBI	 := 1
 endif
 
+ifeq ($(ARCH),or1k)
+LOADER_MBI	 := 1
+endif
 
 # convenience
 ifneq ($(E),)
