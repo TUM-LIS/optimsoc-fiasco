@@ -4,7 +4,6 @@
 ENTRY(_start)
 
 PHDRS {
-  vectors PT_LOAD;
   common PT_LOAD;
 #ifdef IMAGE_MODE
   mods PT_LOAD;
@@ -14,15 +13,12 @@ PHDRS {
 SECTIONS
 {
   . = LINKADDR;
-  .vectors :
-  {
-    *(.vectors)
-  } : vectors
 
   /* Merge .text, .rodata, and .data in one segment to save space */
   .text :
   {
    _stext = .;
+    *(.vectors)
     *(.init)
     *(.text .text.* .gnu.linkonce.t.*)
   } : common
