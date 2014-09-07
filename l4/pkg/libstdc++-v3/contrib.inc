@@ -17,7 +17,7 @@ __GCCSUBVER= $(wordlist 1, $(GCCSUBVERSION), $(__NUMBERS))
 
 SDTCXX_0x = n
 
-STDCXX_AVAILABLE_VERSIONS = 4.4 4.5 4.6 4.7 4.8
+STDCXX_AVAILABLE_VERSIONS = 4.4 4.5 4.6 4.7 4.8 4.9
 
 ifeq ("$(GCCMAJORVERSION)", "4")
   ifeq ("$(GCCMINORVERSION)", "4")
@@ -46,6 +46,14 @@ ifeq ("$(GCCMAJORVERSION)", "4")
     STDCXX_CONTRIB_VERSION_4.7_PLUS := y
     STDCXX_0x = y
   endif
+  ifeq ("$(GCCMINORVERSION)", "9")
+    STDCXX_CONTRIB_VERSION := 4.9
+    STDCXX_CONTRIB_VERSION_4.5_PLUS := y
+    STDCXX_CONTRIB_VERSION_4.6_PLUS := y
+    STDCXX_CONTRIB_VERSION_4.7_PLUS := y
+    STDCXX_CONTRIB_VERSION_4.8_PLUS := y
+    STDCXX_0x = y
+  endif
 endif
 
 STDCXX_CONTRIB_DIR = $(STDCXX_PKG_DIR)/contrib/libstdc++-v3-$(STDCXX_CONTRIB_VERSION)
@@ -56,6 +64,7 @@ CPU_H_ppc32 := powerpc
 CPU_H_arm   := arm
 CPU_H_amd64 := i386
 CPU_H_sparc := sparc
+CPO_H_or1k  := or1k
 
 CPU_H_generic := config/cpu/generic
 CPU_H_arch     = config/cpu/$(CPU_H_$(BUILD_ARCH))
