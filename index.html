@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Optimsoc-fiasco by TUM-LIS</title>
+    <title>FIASCO.OC Port for OpenRISC</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -31,47 +31,87 @@
 
       <section>
         <div id="title">
-          <h1>Optimsoc-fiasco</h1>
-          <p>OpTiMSoC FIASCO.OC port</p>
+          <h1>FIASCO.OC Port for OpenRISC</h1>
           <hr>
           <span class="credits left">Project maintained by <a href="https://github.com/TUM-LIS">TUM-LIS</a></span>
           <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
         </div>
 
         <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to the port description.</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>This is the port description of FIASCO.OC and L4Re for the OpenRISC processor. We summarize the steps taken and parts implemented on this site so that you can use it to port FIASCO.OC to other processor architectures efficiently.</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<h3>Starting Point</h3>
+
+<p>Before we started the port there were some important things to
+check. First you should have your C/C++ compliant toolchain ready.
+There we were lucky, that the OpenRISC project heavily works on stable
+up-to-date GCC toolchains and we had the uClibc toolchain ready. It is
+a strong advantage if you are fimiliar with your toolchain.</p>
+
+<p>Beside this you should have a simulator or qemu ready for your
+architecture as you need some heavy low level debugging the next
+weeks.</p>
+
+<p>So what does porting actually mean? In fact it means there is a
+Hardware Abstraction Layer and you need to provide the implementation
+of the functions for your architecture. There are a number
+of <code>ARCH-or1k</code> folders all over the project and in each of
+them you need to implement some functions. You should know the
+assembly of your architecture well, as you will need to implement many
+functions in assembly. This page will document how we implemented the
+required functions and in which order it makes sense to do this.</p>
+
+<p>We started the port from the official public svn repository and forked it to github <a href="https://github.com/TUM-LIS/optimsoc-fiasco/commit/7c6e514b127353026801ff23876c09ef7943b516">here</a>.</p>
+
+<p>We actually did not implement the whole thing and then tested it,
+but started with stubs. In our case they led to an unknown exception
+what makes sense so that you don't forget one of those many. You might
+want to do the same and first start with empty implementations to see
+some first full build within hours instead of waiting for days for first progress.</p>
+
+<h3>Project structure</h3>
+
+<p>First of all the source tree is split in two parts, namely for the
+kernel and then all L4 related stuff, such as libraries to build
+applications, some standard servers etc. The latter is organized in
+packages and you need a variety of them (at least 14) to start a
+simple system.</p>
+
+<h3>Your Toolchain and FIASCO.OC</h3>
+
+<p>TODO: GCC 4.9 and uClibc described</p>
+
+<h3>Porting the bootloader</h3>
+
+<p>TODO: The long story of the 14 packages</p>
+
+<p>Build:
+<pre><code>$l4/> make B=mybuild
+$l4/> cd mybuild
+$l4/mybuild/> make pkg S=ldscripts,libgcc-pure,l4sys,crtn,uclibc-headers,cxx,uclibc-minimal,libgcc,drivers-frst,l4util,libstdc++-headers,cxx_libc_io,cxx_libc_io,l4re,bootstrap
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p>At this point it complains about missing modules, remove them:</p>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<pre><code>
+$l4/mybuild> cd pkg/bootstrap/server/src/OBJ-or1k_/
+</code></pre>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p>Remove <code>mod00.bin</code>, <code>mod01.bin</code>
+and <code>mod02.bin</code> from <code>mod.make.inc</code> and finish
+compilation:</p>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<pre><code>
+$src/OBJ-or1k_/> make
+</code></pre>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p>Now you can start the executable in the simulator:</p>
+<pre><code>
+$src/OBJ-or1k_/> /path/to/or1k/sim -m 0x2000000 bootstrap.auto-build-useless.elf
+</code></pre>
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-
-    </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
   </body>
