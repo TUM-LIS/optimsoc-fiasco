@@ -1,6 +1,6 @@
 /**
- * \file   support_sparc_leon3.cc
- * \brief  Support for the Sparc LEON3 platform
+ * \file   or1ksim.cc
+ * \brief  Support for the or1ksim Simulator
  *
  * \date   2010
  * \author Björn Döbel <doebel@os.inf.tu-dresden.de>
@@ -16,6 +16,7 @@
  */
 
 #include "support.h"
+#include <l4/drivers/uart_or1ksim.h>
 
 namespace {
 class Platform_or1ksim : public Platform_base
@@ -30,6 +31,15 @@ class Platform_or1ksim : public Platform_base
 
   void init()
   {
+    static L4::Io_register_block_mmio r(0x02000000); 
+    static L4::Uart_or1ksim _uart; 
+    _uart.startup(&r); 
+/*		while(true) */
+/*		{ */
+		  _uart.write("Hello World\n", 12);  
+/*		} */
+		//asm("l.sys 0x815");
+    set_stdio_uart(&_uart); 
   }
 
 
@@ -43,7 +53,7 @@ class Platform_or1ksim : public Platform_base
 
   void setup_memory_map(l4util_mb_info_t *, Region_list *ram, Region_list *)
   {
-      asm ("l.sys 0x0815");
+/*      asm ("l.sys 0x0815"); */
   }
 };
 }

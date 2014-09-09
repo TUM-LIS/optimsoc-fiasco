@@ -192,7 +192,8 @@ extern "C" void __main();
 void __main()
 { 
   // TODO: Looks nice, but check
-  asm("l.sys 0x0815");
+	//uart()->write("\r", 1);
+  //asm("l.sys 0x0815");
   clear_bss();
   ctor_init();
   Platform_base::iterate_platforms();
@@ -238,8 +239,10 @@ write(int fd, const void *buf, size_t count)
       while (i--)
         {
           char c = *b++;
+#if !defined(ARCH_or1k)
           if (c == '\n')
             uart()->write("\r", 1);
+#endif
           uart()->write(&c, 1);
         }
 
