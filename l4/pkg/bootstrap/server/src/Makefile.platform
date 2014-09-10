@@ -35,4 +35,5 @@ SUPPORT_CC_sparc-leon3         := platform/leon3.cc
 SUPPORT_CC_x86-pc              := platform/x86_pc.cc
 SUPPORT_CC_amd64-pc            := platform/x86_pc.cc
 
+# or1k
 SUPPORT_CC_or1k-or1ksim        := platform/or1ksim.cc
