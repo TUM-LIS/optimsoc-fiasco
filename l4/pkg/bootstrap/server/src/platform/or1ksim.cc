@@ -19,7 +19,8 @@
 #include <l4/drivers/uart_or1ksim.h>
 
 namespace {
-class Platform_or1ksim : public Platform_base
+//class Platform_or1ksim : public Platform_base
+class Platform_or1ksim : public Platform_single_region_ram
 {
   bool probe() { return true; }
 
@@ -51,10 +52,10 @@ class Platform_or1ksim : public Platform_base
   {
   }
 
-  void setup_memory_map(l4util_mb_info_t *, Region_list *ram, Region_list *)
-  {
+/*  void setup_memory_map(l4util_mb_info_t *, Region_list *ram, Region_list *) */
+/*  { */
 /*      asm ("l.sys 0x0815"); */
-  }
+/*  } */
 };
 }
 

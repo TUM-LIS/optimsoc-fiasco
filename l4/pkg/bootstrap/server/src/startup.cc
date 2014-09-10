@@ -388,8 +388,11 @@ setup_memory_map(l4util_mb_info_t *mbi)
     }
 
   if (!parsed_mem_option)
+	{
+		printf("NO Command line option given for memory, going to standard handler\n");
     // No -mem option given, use the one given by the platform
     Platform_base::platform->setup_memory_map(mbi, &ram, &regions);
+	}
 
   dump_ram_map(true);
 }
@@ -1005,6 +1008,9 @@ construct_mbi(l4util_mb_info_t *mbi)
   mbi->flags      |= L4UTIL_MB_MODS;
   mbi->mods_addr   = (l4_addr_t)mods;
 
+/*  printf("mbi->mods_count:  %lu\n", mbi->mods_count); */
+/*  printf("_module_info_start:  %lu\n", _module_info_start); */
+/*  printf("_module_info_end:  %lu\n", _module_info_end); */
   assert(mbi->mods_count >= 2);
 
   for (i = 0; i < mbi->mods_count; ++i)
@@ -1144,7 +1150,11 @@ scan_ram_size(unsigned long base_addr, unsigned long max_scan_size_mb)
 
 /**
  * \brief  Startup, started from crt0.S
- */
+ *
+ * \parameters
+ * l4util_mb_info_t *mbi defines multiboot structure
+ * ptab64_mem_info_t *ptab64_info 64bit only, position of page table
+**/
 /* entry point */
 extern "C" void
 startup(l4util_mb_info_t *mbi, l4_umword_t flag,
@@ -1154,7 +1164,9 @@ startup(l4util_mb_info_t *mbi, l4_umword_t flag,
 	void *realmode_si, ptab64_mem_info_t *ptab64_info)
 {
   void *l4i;
+	/* addresses of kernel, sigma0, roottask, mbi */
   boot_info_t boot_info;
+	/* start, end, command line of module in memory */
   l4util_mb_mod_t *mb_mod;
 
   if (!Platform_base::platform)
@@ -1166,7 +1178,9 @@ startup(l4util_mb_info_t *mbi, l4_umword_t flag,
     }
 
 #ifdef LOADER_MBI
+	/* adds to static my_loader_mbi the command line arguments */
   loader_mbi_add_cmdline(_mbi_cmdline);
+	/* address of static my_loader_mbi is now stored in mbi */
   mbi = loader_mbi();
 #endif
 
@@ -1192,7 +1206,9 @@ startup(l4util_mb_info_t *mbi, l4_umword_t flag,
 #endif
       );
 
+	/* store the information of __regs in a Region_list class */
   regions.init(__regs, sizeof(__regs) / sizeof(__regs[0]), "regions");
+	/* store the information of __ram in a Region_list class */
   ram.init(__ram, sizeof(__ram) / sizeof(__ram[0]), "RAM",
            get_memory_max_size(mbi), get_memory_max_address());
 
@@ -1252,6 +1268,8 @@ startup(l4util_mb_info_t *mbi, l4_umword_t flag,
 #elif defined(ARCH_or1k)
   // TODO: something needed
 /*  asm("l.sys 0x0815"); */
+	/* address of static my_loader_mbi is now stored in mbi */
+	/* since LOADER_MBI is true, this call will most likely be redundant */
   mbi = loader_mbi();
 
   (void)realmode_si;
