@@ -1251,7 +1251,7 @@ startup(l4util_mb_info_t *mbi, l4_umword_t flag,
   (void)flag;
 #elif defined(ARCH_or1k)
   // TODO: something needed
-  asm("l.sys 0x0815");
+/*  asm("l.sys 0x0815"); */
   mbi = loader_mbi();
 
   (void)realmode_si;
@@ -1473,7 +1473,7 @@ startup(l4util_mb_info_t *mbi, l4_umword_t flag,
 
 #elif defined(ARCH_or1k)
   // TODO: The arm code looked quite matching..
-  asm("l.sys 0x0815");
+/*  asm("l.sys 0x0815"); */
   typedef void (*startup_func)(void);
   startup_func f = (startup_func)boot_info.kernel_start;
   f();

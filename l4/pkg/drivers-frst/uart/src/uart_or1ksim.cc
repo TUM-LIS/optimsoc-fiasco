@@ -8,6 +8,8 @@
  * Please see the COPYING-GPL-2 file for details.
  */
 #include "uart_or1ksim.h"
+#include "poll_timeout_counter.h"
+
 
 namespace L4
 {
@@ -151,10 +153,17 @@ namespace L4
 
   int Uart_or1ksim::write(char const *s, unsigned long count) const
   {
+    Poll_timeout_counter cnt(5000000);
     unsigned long c = count;
     while (c--)
+		{
+      cnt.set(5000000);
+      while (cnt.test(!(_regs->read<unsigned char>(UART_LSR) & UART_LSR_THRE)))
+				;
       out_char(*s++);
+		}
 
+		cnt.set(5000000);
     return count;
   }
 };
