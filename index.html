@@ -112,6 +112,26 @@ $src/OBJ-or1k_/> make
 $src/OBJ-or1k_/> /path/to/or1k/sim -m 0x2000000 bootstrap.auto-build-useless.elf
 </code></pre>
 
+<p>To activate the UART messages, a config file, with the following content, is needed:</p>
+<pre><code>
+section memory
+	ce = 1
+	baseaddr = 0x00
+	size  = 0x02000000
+end
+
+section uart
+	enabled = 1
+	baseaddr = 0x02000000
+	channel = "xterm:"
+	16550 = 1
+end
+</code></pre>
+
+<p>Now you can start the executable with the config file in the simulator:</p>
+<pre><code>
+$src/OBJ-or1k_/> /path/to/or1k/sim -f /path/to/config.cfg bootstrap.auto-build-useless.elf
+</code></pre>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
   </body>
