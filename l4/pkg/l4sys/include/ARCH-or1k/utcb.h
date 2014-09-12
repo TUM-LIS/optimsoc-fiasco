@@ -85,7 +85,7 @@ typedef struct l4_exc_regs_t
 #ifdef __GNUC__
 L4_INLINE l4_utcb_t *l4_utcb_direct(void) L4_NOTHROW
 {
-  printf("%s unimplemented.\n", __func__);
+  //printf("%s unimplemented.\n", __func__);
   l4_utcb_t *utcb = 0;
 
   return utcb;
@@ -94,30 +94,30 @@ L4_INLINE l4_utcb_t *l4_utcb_direct(void) L4_NOTHROW
 
 L4_INLINE l4_umword_t l4_utcb_exc_pc(l4_exc_regs_t *u) L4_NOTHROW
 {
-  printf("%s unimplemented.\n", __func__);
+  //printf("%s unimplemented.\n", __func__);
   return 0;
 }
 
 L4_INLINE void l4_utcb_exc_pc_set(l4_exc_regs_t *u, l4_addr_t pc) L4_NOTHROW
 {
-  printf("%s unimplemented.\n", __func__);
+  //printf("%s unimplemented.\n", __func__);
 }
 
 L4_INLINE l4_umword_t l4_utcb_exc_typeval(l4_exc_regs_t *u) L4_NOTHROW
 {
-    printf("%s unimplemented.\n", __func__);
+    //printf("%s unimplemented.\n", __func__);
   return 0;
 }
 
 L4_INLINE int l4_utcb_exc_is_pf(l4_exc_regs_t *u) L4_NOTHROW
 {
-    printf("%s unimplemented.\n", __func__);
+    //printf("%s unimplemented.\n", __func__);
   return 0;
 }
 
 L4_INLINE l4_addr_t l4_utcb_exc_pfa(l4_exc_regs_t *u) L4_NOTHROW
 {
-    printf("%s unimplemented.\n", __func__);
+    //printf("%s unimplemented.\n", __func__);
     //  return u->pfa;
     return 0;
 }
