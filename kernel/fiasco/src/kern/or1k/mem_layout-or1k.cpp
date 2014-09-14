@@ -48,7 +48,7 @@ public:
 
 
 // ------------------------------------------------------------------------
-IMPLEMENTATION [sparc]:
+IMPLEMENTATION [or1k]:
 
 #include "panic.h"
 #include "paging.h"
@@ -118,7 +118,7 @@ Mem_layout::is_special_mapped(void const * /*a*/)
 }
 
 
-IMPLEMENTATION [sparc && debug]:
+IMPLEMENTATION [or1k && debug]:
 
 #include "kip_init.h"
 
@@ -158,7 +158,7 @@ Mem_layout::init()
       panic("Could not allocate trace buffer");
 }
 
-IMPLEMENTATION [sparc && !debug]:
+IMPLEMENTATION [or1k && !debug]:
 
 PUBLIC static FIASCO_INIT
 void

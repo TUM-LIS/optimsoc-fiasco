@@ -35,7 +35,7 @@ namespace KIP_namespace
     char mem_descs[Size_mem_descs];
   };
 
-  KIP sparc_kernel_info_page asm("or1k_kernel_info_page") __attribute__((section(".kernel_info_page"))) =
+  KIP or1k_kernel_info_page asm("or1k_kernel_info_page") __attribute__((section(".kernel_info_page"))) =
     {
       {
 	/* 00/00  */ L4_KERNEL_INFO_MAGIC,
@@ -61,7 +61,7 @@ namespace KIP_namespace
 IMPLEMENT
 void Kip_init::init()
 {
-  Kip *kinfo = reinterpret_cast<Kip*>(&KIP_namespace::sparc_kernel_info_page);
+  Kip *kinfo = reinterpret_cast<Kip*>(&KIP_namespace::or1k_kernel_info_page);
   Kip::init_global_kip(kinfo);
 
   /* add kernel image */

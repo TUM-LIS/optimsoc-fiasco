@@ -15,7 +15,8 @@ IMPLEMENT static inline
 void Proc::sti()
 {
   unsigned p = Spr_Sr::read();
-  NOT_IMPL_PANIC
+  //NOT_IMPL_PANIC
+	asm ("l.sys 0x0815");
   Spr_Sr::write(p);
 }
 
@@ -23,23 +24,26 @@ void Proc::sti()
 IMPLEMENT static inline
 void Proc::cli()
 {
-  unsigned p = Psr::read();
-  p |= (0xF << Psr::Interrupt_lvl);
-  Psr::write(p);
+  unsigned p = Spr_Sr::read();
+/*  p |= (0xF << Spr_Sr::Interrupt_lvl); */
+	asm volatile ("l.sys 0x0815");
+  Spr_Sr::write(p);
 }
 
 /// Are external interrupts enabled ?
 IMPLEMENT static inline
 Proc::Status Proc::interrupts()
 {
-  return Psr::read() & (0xF << Psr::Interrupt_lvl);
+/*  return Spr_Sr::read() & (0xF << Spr_Sr::Interrupt_lvl); */
+	asm volatile ("l.sys 0x0815");
+	return Spr_Sr::read();
 }
 
 /// Block external interrupts and save the old state
 IMPLEMENT static inline
 Proc::Status Proc::cli_save()
 {
-  Status ret = Psr::read();
+  Status ret = Spr_Sr::read();
   Proc::cli();
   return ret;
 }
@@ -49,7 +53,7 @@ IMPLEMENT static inline
 void Proc::sti_restore(Status status)
 {
   (void)status;
-  Psr::write(status);
+  Spr_Sr::write(status);
 }
 
 IMPLEMENT static inline
@@ -65,12 +69,12 @@ void Proc::halt()
   asm volatile ("ta 0\n");
 }
 
-IMPLEMENT static inline
-Mword Proc::wake(Mword srr1)
-{
-  (void)srr1;
-  return 0; // XXX
-}
+/*IMPLEMENT static inline */
+/*Mword Proc::wake(Mword srr1) */
+/*{ */
+/*  (void)srr1; */
+/*  return 0; // XXX */
+/*} */
 
 IMPLEMENT static inline
 void Proc::irq_chance()

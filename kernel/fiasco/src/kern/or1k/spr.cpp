@@ -3,6 +3,7 @@ INTERFACE:
 #include "types.h"
 
 #include <or1k-support.h>
+#include <spr-defs.h>
 
 class Spr_Sr
 {

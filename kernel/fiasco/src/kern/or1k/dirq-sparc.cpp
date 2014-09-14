@@ -1,4 +1,4 @@
-IMPLEMENTATION [sparc]:
+IMPLEMENTATION [or1k]:
 // ---------------------------------------------------------------------------
 #include "std_macros.h"
 #include "timer.h"

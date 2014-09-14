@@ -1,5 +1,5 @@
 /**
- * Sparc timer
+ * or1k timer
  */
 INTERFACE [or1k]:
 

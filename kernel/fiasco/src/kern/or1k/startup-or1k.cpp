@@ -5,11 +5,11 @@ IMPLEMENTATION [or1k]:
 #include "cpu.h"
 #include "fpu.h"
 #include "ipi.h"
-#include "kern_lib_page.h"
+//#include "kern_lib_page.h"
 #include "kernel_task.h"
 #include "kip_init.h"
 #include "kmem_alloc.h"
-#include "kmem_space.h"
+//#include "kmem_space.h"
 #include "per_cpu_data.h"
 #include "per_cpu_data_alloc.h"
 #include "perf_cnt.h"
@@ -57,11 +57,12 @@ Startup::stage2()
   Thread::init_per_cpu(boot_cpu, false);
 
   Cpu::init_mmu();
-  Cpu::cpus.cpu(boot_cpu).init(false, true);
+/*  Cpu::cpus.cpu(boot_cpu).init(false, true); */
+  Cpu::cpus.cpu(boot_cpu).init(true);
   Platform_control::init(boot_cpu);
   Fpu::init(boot_cpu, false);
   Ipi::init(boot_cpu);
   Timer::init(boot_cpu);
-  Kern_lib_page::init();
+  //Kern_lib_page::init();
   Utcb_init::init();
 }

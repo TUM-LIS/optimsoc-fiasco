@@ -30,7 +30,7 @@ EXTENSION class Return_frame
 IMPLEMENTATION [or1k]:
 
 #include "warn.h"
-#include "psr.h"
+/*#include "psr.h" */
 
 IMPLEMENT
 void
@@ -99,7 +99,7 @@ Return_frame::ip(Mword _pc)
   Return_frame::srr0 = _pc;
 }
 
-IMPLEMENT inline NEEDS ["psr.h"]
+IMPLEMENT inline //NEEDS ["psr.h"]
 bool
 Return_frame::user_mode()
 {

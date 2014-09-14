@@ -325,6 +325,71 @@ mp_cas2_arch(char *m, Mword o1, Mword o2, Mword n1, Mword n2)
 }
 
 //---------------------------------------------------------------------------
+IMPLEMENTATION[or1k]:
+
+inline
+void
+atomic_mp_add(Mword *l, Mword value)
+{
+  Mword tmp, ret;
+
+  asm volatile (
+      "l.sys 0x0815");
+}
+
+inline
+void
+atomic_mp_and(Mword *l, Mword value)
+{
+  Mword tmp, ret;
+
+  asm volatile (
+      "l.sys 0x0815");
+}
+
+inline
+void
+atomic_mp_or(Mword *l, Mword value)
+{
+  Mword tmp, ret;
+
+  asm volatile (
+      "l.sys 0x0815");
+}
+
+
+inline
+bool
+mp_cas_arch(Mword *m, Mword o, Mword n)
+{
+  Mword tmp, res;
+
+  asm volatile
+    ("l.sys 0x0815");
+
+  // res == 0 is ok
+  // res == 1 is failed
+
+  return !res;
+}
+
+inline
+bool
+mp_cas2_arch(char *m, Mword o1, Mword o2, Mword n1, Mword n2)
+{
+  register Mword _n1 asm("r6") = n1;
+  register Mword _n2 asm("r7") = n2;
+  register Mword tmp1 asm("r8");
+  register Mword tmp2 asm("r9");
+  Mword res;
+
+  asm volatile
+    ("l.sys 0x0815");
+
+  return !res;
+}
+
+//---------------------------------------------------------------------------
 IMPLEMENTATION [mp]:
 
 template< typename T > inline

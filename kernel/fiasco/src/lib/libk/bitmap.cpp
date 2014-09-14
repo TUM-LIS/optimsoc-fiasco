@@ -157,11 +157,13 @@ public:
 
   void atomic_set_bit(unsigned long bit)
   {
+    //this->atomic_mp_or(&_bits, 1UL << bit);
     atomic_mp_or(&_bits, 1UL << bit);
   }
 
   void atomic_clear_bit(unsigned long bit)
   {
+    //this->atomic_mp_and(&_bits, ~(1UL << bit));
     atomic_mp_and(&_bits, ~(1UL << bit));
   }
 

@@ -63,7 +63,7 @@ public:
 };
 
 //------------------------------------------------------------------------------
-IMPLEMENTATION [sparc && leon3]:
+IMPLEMENTATION [or1k && or1ksim]:
 
 #include "boot_info.h"
 #include "io.h"
@@ -71,7 +71,7 @@ IMPLEMENTATION [sparc && leon3]:
 #include "irq_chip_generic.h"
 #include "irq_mgr.h"
 #include "panic.h"
-#include "sparc_types.h"
+#include "or1k_types.h"
 
 #include <cassert>
 #include <cstdio>
