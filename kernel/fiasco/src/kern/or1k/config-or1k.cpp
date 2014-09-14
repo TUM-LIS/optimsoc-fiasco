@@ -1,6 +1,6 @@
 INTERFACE [or1k]:
 
-#include <cstring>
+#include <string.h>
 
 EXTENSION class Config
 {
@@ -40,7 +40,7 @@ public:
 
 
 //---------------------------------------------------------------------------
-IMPLEMENTATION [sparc]:
+IMPLEMENTATION [or1k]:
 
 char const Config::char_micro = '\265';
 const char *const Config::kernel_warn_config_string = 0;

@@ -136,7 +136,7 @@ typedef Ptab::Page_addr_wrap<Page_number, Virt_addr::Shift> Ptab_va_vpn;
 
 IMPLEMENTATION[or1k]:
 
-#include "psr.h"
+/*#include "psr.h" */
 #include "lock_guard.h"
 #include "cpu_lock.h"
 #include "kip.h"
@@ -163,7 +163,7 @@ Mword PF::is_translation_error(Mword error)
   return !(error & 1 << 30) /* DSISR/SRR1 bit 1 */;
 }
 
-IMPLEMENT inline NEEDS["psr.h"]
+IMPLEMENT inline //NEEDS["psr.h"]
 Mword PF::is_usermode_error(Mword error)
 {
   return 0 & error;//(error & Msr::Msr_pr);

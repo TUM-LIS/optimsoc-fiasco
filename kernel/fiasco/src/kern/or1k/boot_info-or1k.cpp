@@ -1,7 +1,7 @@
 INTERFACE [or1k]:
 
 #include "types.h"
-#include "or1k_types.h"
+//#include "or1k_types.h"
 
 EXTENSION class Boot_info 
 {

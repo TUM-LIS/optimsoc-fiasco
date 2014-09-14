@@ -1,4 +1,4 @@
-IMPLEMENTATION [sparc]:
+IMPLEMENTATION [or1k]:
 
 #include "globals.h"
 #include "kmem_alloc.h"

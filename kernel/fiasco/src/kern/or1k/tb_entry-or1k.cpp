@@ -25,7 +25,7 @@ public:
 };
 
 // --------------------------------------------------------------------
-IMPLEMENTATION [sparc]:
+IMPLEMENTATION [or1k]:
 
 PUBLIC inline
 void

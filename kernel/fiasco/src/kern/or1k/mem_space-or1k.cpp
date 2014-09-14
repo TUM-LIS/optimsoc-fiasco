@@ -313,7 +313,7 @@ Mem_space::v_delete(Vaddr virt, Page_order size,
 		    L4_fpage::Rights page_attribs)
 {
   (void)virt; (void)size; (void)page_attribs;
-  return page_attribs;
+  return page_attribs; 
 }
 
 PUBLIC static inline

@@ -18,7 +18,7 @@ private:
 
 
 //------------------------------------------------------------------------------
-IMPLEMENTATION[sparc]:
+IMPLEMENTATION[or1k]:
 
 PUBLIC static inline
 Decrementer *
