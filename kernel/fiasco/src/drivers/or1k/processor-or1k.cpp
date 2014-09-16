@@ -66,7 +66,8 @@ IMPLEMENT static inline
 void Proc::halt()
 {
   // XXX
-  asm volatile ("ta 0\n");
+/*  asm volatile ("ta 0\n"); */
+	asm volatile ("l.sys 0x0815");
 }
 
 /*IMPLEMENT static inline */
@@ -80,21 +81,24 @@ IMPLEMENT static inline
 void Proc::irq_chance()
 {
   // XXX?
-  asm volatile ("nop; nop;" : : :  "memory");
+/*  asm volatile ("nop; nop;" : : :  "memory"); */
+	asm volatile ("l.sys 0x0815");
 }
 
 IMPLEMENT static inline
 void Proc::stack_pointer(Mword sp)
 {
   (void)sp;
-  asm volatile ("mov %0, %%sp\n" : : "r"(sp));
+/*  asm volatile ("mov %0, %%sp\n" : : "r"(sp)); */
+	asm volatile ("l.sys 0x0815");
 }
 
 IMPLEMENT static inline
 Mword Proc::stack_pointer()
 {
   Mword sp = 0;
-  asm volatile ("mov %%sp, %0\n" : "=r" (sp));
+/*  asm volatile ("mov %%sp, %0\n" : "=r" (sp)); */
+	asm volatile ("l.sys 0x0815");
   return sp;
 }
 
@@ -102,10 +106,11 @@ IMPLEMENT static inline
 Mword Proc::program_counter()
 {
   Mword pc = 0;
-  asm volatile ("call 1\n\t"
-                "nop\n\t" // delay instruction
-		"1: mov %%o7, %0\n\t"
-		: "=r" (pc) : : "o7");
+/*  asm volatile ("call 1\n\t" */
+/*                "nop\n\t" // delay instruction */
+/*		"1: mov %%o7, %0\n\t" */
+/*		: "=r" (pc) : : "o7"); */
+	asm volatile ("l.sys 0x0815");
   return pc;
 }
 
@@ -114,10 +119,11 @@ template <int ASI>
 Mword Proc::read_alternative(Mword reg)
 {
 	Mword ret;
-	asm volatile("lda [%1] %2, %0"
-				  : "=r" (ret)
-				  : "r" (reg),
-				    "i" (ASI));
+/*	asm volatile("lda [%1] %2, %0" */
+/*				  : "=r" (ret) */
+/*				  : "r" (reg), */
+/*				    "i" (ASI)); */
+	asm volatile ("l.sys 0x0815");
 	return ret;
 
 }
@@ -126,11 +132,12 @@ PUBLIC static inline
 template <int ASI>
 void Proc::write_alternative(Mword reg, Mword value)
 {
-	asm volatile ("sta %0, [%1] %2\n\t"
-				  :
-				  : "r"(value),
-				    "r"(reg),
-				    "i"(ASI));
+/*	asm volatile ("sta %0, [%1] %2\n\t" */
+/*				  : */
+/*				  : "r"(value), */
+/*				    "r"(reg), */
+/*				    "i"(ASI)); */
+	asm volatile ("l.sys 0x0815");
 }
 
 

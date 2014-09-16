@@ -35,25 +35,26 @@ namespace KIP_namespace
     char mem_descs[Size_mem_descs];
   };
 
-  KIP or1k_kernel_info_page asm("or1k_kernel_info_page") __attribute__((section(".kernel_info_page"))) =
-    {
-      {
+  KIP my_kernel_info_page asm("my_kernel_info_page") __attribute__((section(".kernel_info_page"))) =
+		{
+			{
 	/* 00/00  */ L4_KERNEL_INFO_MAGIC,
 	             Config::Kernel_version_id,
-	             (Size_mem_descs + sizeof(Kip)) >> 4,
-	             {}, 0, {},
-	/* 10/20  */ 0, {},
-	/* 20/40  */ 0, 0, {},
-	/* 30/60  */ 0, 0, {},
-	/* 40/80  */ 0, 0, {},
-	/* 50/A0  */ 0, (sizeof(Kip) << (sizeof(Mword)*4)) | Num_mem_descs, {},
-	/* 60/C0  */ {},
-	/* A0/140 */ 0, 0, 0, 0,
-	/* B0/160 */ {},
-	/* E0/1C0 */ 0, 0, {},
-	/* F0/1D0 */ {"", 0}, {},
-      },
-      {}
+	             (Size_mem_descs + sizeof(Kip)) >> 4, {},
+							 0, {},
+	/* 10/20  */ 0,    /* Mword _mem_info*/
+							 {"", 0}, /* Platform_info aka 16+32=1.5 Words */
+							 0,    /* Cpu_time aka 64=2 Words */
+							 0,    /* Mword frequency_cpu */
+							 0,    /* Mword frequency_bus */
+							 0, 0, /* Mword sigma0_sp, sigma0_ip */
+							 0, 0, /* Mword sigma1_sp, sigma1_ip */
+							 0, 0, /* Mword root_spu, root_ip */
+							 0,		 /* mword user_ptr */
+							 0,		 /* mword vhw_offset */
+							 {}		 /* Mword reserved[2] */
+			},
+			{}
     };
 };
 
@@ -61,7 +62,7 @@ namespace KIP_namespace
 IMPLEMENT
 void Kip_init::init()
 {
-  Kip *kinfo = reinterpret_cast<Kip*>(&KIP_namespace::or1k_kernel_info_page);
+  Kip *kinfo = reinterpret_cast<Kip*>(&KIP_namespace::my_kernel_info_page);
   Kip::init_global_kip(kinfo);
 
   /* add kernel image */
