@@ -41,6 +41,7 @@ void Io::write_dirty(T value, Address address)
 }
 
 //------------------------------------------------------------------------------
+// 0815 should a port support be available in or1k implementation?
 /**
  * No port support
  */
