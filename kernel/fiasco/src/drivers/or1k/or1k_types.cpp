@@ -1,2 +1,2 @@
-INTERFACE [sparc]:
+INTERFACE [or1k]:
 

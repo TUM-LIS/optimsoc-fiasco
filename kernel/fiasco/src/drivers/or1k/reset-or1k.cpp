@@ -10,25 +10,16 @@ enum Reg_offsets
 };
 
 /**
- * Porgram Gerneral purpose timer as watchdog, thus causing a system reset
+ * 0815 reset by syscall?
  */
 void __attribute__ ((noreturn))
 platform_reset(void)
 {
-
-  Address mbar = Boot_info::mbar();
-  Io::write<Unsigned32>(0, mbar + Gp0_mode);
-  Io::write<Unsigned32>(0xff, mbar + Gp0_count); //timeout
-
-  //0x9004 (0x8000 enable watchdog | 0x1000 CE bit - start counter |
-  //0x4 CE bit controls timer counter
-  Io::write<Unsigned32>(0x9004, mbar + Gp0_mode);
-
-  //in  case we return
+	asm volatile ("l.sys 0x100");
   for(;;) ;
 }
 
-IMPLEMENTATION [sparc && !leon3]:
+IMPLEMENTATION [or1k && !or1ksim]:
 
 void __attribute__ ((noreturn))
 platform_reset(void)
