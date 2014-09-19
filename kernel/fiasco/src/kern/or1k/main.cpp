@@ -17,9 +17,9 @@ IMPLEMENTATION [or1k]:
 #include "kernel_thread.h"
 #include "kernel_task.h"
 #include "kernel_console.h"
-//#include "reset.h" //TODO cbass: implement
+#include "reset.h" //TODO cbass: implement
 #include "space.h"
-//#include "terminate.h" //TODO cbass: implement
+#include "terminate.h" //TODO cbass: implement
 
 #include "processor.h"
 #include "boot_info.h"
