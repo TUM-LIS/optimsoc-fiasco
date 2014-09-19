@@ -1,4 +1,4 @@
-INTERFACE [sparc]:
+INTERFACE [or1k]:
 
 #include "psr.h"
 #include "trap_state.h"
@@ -40,7 +40,7 @@ class Jdb_thread_name_frame : public Jdb_entry_frame
 {};
 
 //---------------------------------------------------------------------------
-IMPLEMENTATION[sparc]:
+IMPLEMENTATION[or1k]:
 
 #include <cstdio>
 #include "processor.h"

@@ -1,4 +1,4 @@
-IMPLEMENTATION [sparc]:
+IMPLEMENTATION [or1k]:
 
 EXTENSION class Jdb_tcb
 {
