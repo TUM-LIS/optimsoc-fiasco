@@ -141,19 +141,6 @@ Thread::pagein_tcb_request(Return_frame * /*regs*/)
   return false;
 }
 
-extern "C"
-{
-  void timer_handler()
-  {
-    Return_frame *rf = nonull_static_cast<Return_frame*>(current()->regs());
-    //disable power savings mode, when we come from privileged mode
-    if(EXPECT_FALSE(rf->user_mode()))
-      rf->srr1 = Proc::wake(rf->srr1);
-
-    Timer::update_system_clock(current_cpu());
-    current_thread()->handle_timer_interrupt();
-  }
-}
 //---------------------------------------------------------------------------
 IMPLEMENTATION [or1k]:
 

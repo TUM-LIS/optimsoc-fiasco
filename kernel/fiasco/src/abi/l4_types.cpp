@@ -693,6 +693,13 @@ public:
   enum { Msg_size = 12 }; // XXX whatever?
 };
 
+
+INTERFACE [or1k]:
+EXTENSION class L4_exception_ipc
+{
+public:
+  enum { Msg_size = 12 }; // XXX whatever?
+};
 //----------------------------------------------------------------------------
 INTERFACE:
 

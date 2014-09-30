@@ -146,7 +146,7 @@ Kernel_thread::init_workload_s0_stack()
   return sp;
 }
 
-IMPLEMENTATION [ux,arm,ppc32,sparc]:
+IMPLEMENTATION [ux,arm,ppc32,sparc,or1k]:
 
 PRIVATE inline
 Address
