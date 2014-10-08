@@ -239,7 +239,7 @@ typedef struct {
 #define EM_COLDFIRE	52	/**< Motorola Coldfire */
 #define EM_68HC12	53	/**< Motorola M68HC12 */
 #define EM_AMD64	62
-#define EM_OR1K     666 // TODO
+#define EM_OR1K     92 /*< OpenRISC 1000 32-bit embedded processor */
 
 #if 0
 #define EM_ALPHA	0x9026	/* interium value used by Linux until the
