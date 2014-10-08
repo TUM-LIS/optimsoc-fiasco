@@ -115,7 +115,7 @@ sub build_obj($$$)
       ".long _bin_${modname}_name                 \n",
       ".long _bin_${modname}_md5sum_compr         \n",
       ".long _bin_${modname}_md5sum_uncompr       \n",
-      ($arch eq 'x86' || $arch eq 'amd64' || $arch eq 'ppc32'
+      ($arch eq 'x86' || $arch eq 'amd64' || $arch eq 'ppc32' || $arch eq 'or1k'
        ? #".section .module_data, \"a\", \@progbits   \n" # Not Xen
          ".section .module_data, \"awx\", \@progbits   \n" # Xen
        : ".section .module_data, #alloc           \n"),
