@@ -1,6 +1,5 @@
 INTERFACE [or1k]:
 
-#include "psr.h"
 #include "trap_state.h"
 #include "tb_entry.h"
 
@@ -66,7 +65,7 @@ bool
 Jdb_entry_frame::debug_ipi() const
 { return false; }
 
-IMPLEMENT inline NEEDS["psr.h"]
+IMPLEMENT inline 
 Address_type
 Jdb_entry_frame::from_user() const
 {

@@ -36,7 +36,6 @@ IMPLEMENTATION [or1k]:
 
 #include "panic.h"
 #include "boot_info.h"
-#include "psr.h"
 
 #include <cstdio>
 

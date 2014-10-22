@@ -9,9 +9,8 @@ crt0_stack_low:
 crt0_stack_high:
 
 
-	.section ".vectors"
+.section ".text"
 	.global _start
-	.org 0x100
 _start:
 	l.movhi r1,hi(crt0_stack_high)
 	l.ori r1,r1,lo(crt0_stack_high)
@@ -21,75 +20,90 @@ _start:
 	l.nop
 
 
+	.section .vectors, "ax"
+
+	.org 0x000
+_vector02:
+	l.ori r15,r0,0x08
+	l.j _vector02
+	l.nop
+
+	.org 0x100
+_vector03:
+	l.ori r15,r0,0x08
+	l.j _vector02
+	l.nop
 
 	.org 0x200
-_vector02:
-	l.j .dead
+_vector04:
+	l.ori r15,r0,0x08
+	l.j _vector02
 	l.nop
 
 	.org 0x300
-_vector03:
-	l.j .dead
+_vector05:
+	l.ori r15,r0,0x08
+	l.j _vector02
 	l.nop
 
 	.org 0x400
-_vector04:
-	l.j .dead
+_vector06:
+	l.ori r15,r0,0x08
+	l.j _vector02
 	l.nop
 
 	.org 0x500
-_vector05:
-	l.j .dead
+_vector07:
+	l.ori r15,r0,0x08
+	l.j _vector02
 	l.nop
 
 	.org 0x600
-_vector06:
-	l.j .dead
+_vector08:
+	l.ori r15,r0,0x08
+	l.j _vector02
 	l.nop
 
 	.org 0x700
-_vector07:
-	l.j .dead
+_vector09:
+	l.ori r15,r0,0x08
+	l.j _vector02
 	l.nop
 
 	.org 0x800
-_vector08:
-	l.j .dead
+_vector0a:
+	l.ori r15,r0,0x08
+	l.j _vector02
 	l.nop
 
 	.org 0x900
-_vector09:
-	l.j .dead
+_vector0b:
+	l.ori r15,r0,0x08
+	l.j _vector02
 	l.nop
 
 	.org 0xa00
-_vector0a:
-	l.j .dead
+_vector0c:
+	l.ori r15,r0,0x08
+	l.j _vector02
 	l.nop
 
 	.org 0xb00
-_vector0b:
-	l.j .dead
+_vector0d:
+	l.ori r15,r0,0x08
+	l.j _vector02
 	l.nop
 
 	.org 0xc00
-_vector0c:
-	l.j .dead
+_vector0e:
+	l.ori r15,r0,0x08
+	l.j _vector02
 	l.nop
 
 	.org 0xd00
-_vector0d:
-	l.j .dead
-	l.nop
-
-	.org 0xe00
-_vector0e:
-	l.j .dead
-	l.nop
-
-	.org 0xf00
 _vector0f:
-	l.j .dead
+	l.ori r15,r0,0x08
+	l.j _vector02
 	l.nop
 
         .org 0x1000
