@@ -153,7 +153,7 @@ public:
   /**
    * Add a new region, with a upper limit check and verboseness.
    */
-  void add(Region const &r, bool may_overlap = false);
+  void add(Region const &r, bool may_overlap = true /*false*/);
 
   /** Dump the whole region list. */
   void dump();
