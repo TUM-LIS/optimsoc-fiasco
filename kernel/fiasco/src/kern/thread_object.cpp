@@ -109,14 +109,15 @@ Thread_object::destroy(Kobject ***rl)
 
 PUBLIC
 void
-Thread_object::invoke(L4_obj_ref /*self*/, L4_fpage::Rights rights, Syscall_frame *f, Utcb *utcb)
+Thread_object::invoke(L4_obj_ref , L4_fpage::Rights rights, Syscall_frame *f, Utcb *utcb)
 {
+	asm volatile ("l.nop"); 
+	/*
   register L4_obj_ref::Operation op = f->ref().op();
   if (((op != 0) && !(op & L4_obj_ref::Ipc_send))
       || (op & L4_obj_ref::Ipc_reply)
       || f->tag().proto() != L4_msg_tag::Label_thread)
     {
-      /* we do IPC */
       Thread *ct = current_thread();
       Thread *sender = 0;
       Thread *partner = 0;
@@ -163,6 +164,7 @@ Thread_object::invoke(L4_obj_ref /*self*/, L4_fpage::Rights rights, Syscall_fram
       f->tag(invoke_arch(f->tag(), utcb));
       return;
     }
+		*/
 }
 
 
