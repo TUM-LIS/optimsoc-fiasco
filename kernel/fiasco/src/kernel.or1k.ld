@@ -3,6 +3,7 @@
 ENTRY(_start)
 
 PHDRS {
+	vectors PT_LOAD;
   etext PT_LOAD;
   etextcommon PT_LOAD;
   phys PT_LOAD;
@@ -15,6 +16,13 @@ PHDRS {
 }
 
 SECTIONS {
+	. = 0x200;
+	.vectors : AT (ADDR(.vectors)) {
+		_vectors = .;
+		*(.vectors);
+		_evectors = .;
+	}  : vectors
+
   . = kernel_load_addr + 0x1000;
   /* 0x0 */
   .except : AT (0x0) {
@@ -23,7 +31,7 @@ SECTIONS {
   . = ALIGN(4K) + 8K;
 
   /* 0x3000 */
-  PROVIDE (_kernel_image_start = .);
+  _kernel_image_start = .;
   .physmem : AT(ADDR(.physmem)) {
   } : phys = 0x0
 

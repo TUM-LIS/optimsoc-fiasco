@@ -9,7 +9,7 @@ crt0_stack_low:
 crt0_stack_high:
 
 
-	.section ".vectors"
+.section ".vectors", "ax"
 	.global _start
 	.org 0x100 /* reset */
 _start:
@@ -21,77 +21,7 @@ _start:
 	l.nop
 
 
-
-	.org 0x200 /* Bus error */
-_vector02:
-	l.j .dead
-	l.nop
-
-	.org 0x300 /* Data Page Fault */
-_vector03:
-	l.j .dead
-	l.nop
-
-	.org 0x400 /* Instruction Page Fault */
-_vector04:
-	l.j .dead
-	l.nop
-
-	.org 0x500 /* Tick Timer */
-_vector05:
-	l.j .dead
-	l.nop
-
-	.org 0x600 /* Alignment */
-_vector06:
-	l.j .dead
-	l.nop
-
-	.org 0x700 /* Illegal Instruction */
-_vector07:
-	l.j .dead
-	l.nop
-
-	.org 0x800 /* External Interrupt */
-_vector08:
-	l.j .dead
-	l.nop
-
-	.org 0x900 /* D-TLB Miss */
-_vector09:
-	l.j .dead
-	l.nop
-
-	.org 0xa00 /* I-TLB Miss */
-_vector0a:
-	l.j .dead
-	l.nop
-
-	.org 0xb00 /* Range */
-_vector0b:
-	l.j .dead
-	l.nop
-
-	.org 0xc00 /* System Call */
-_vector0c:
-	l.j .dead
-	l.nop
-
-	.org 0xd00 /* Floating Point */
-_vector0d:
-	l.j .dead
-	l.nop
-
-	.org 0xe00 /* Trap */
-_vector0e:
-	l.j .dead
-	l.nop
-
-	.org 0xf00 /* Reserved ... */
-_vector0f:
-	l.j .dead
-	l.nop
-
+/*
         .org 0x1000
 .dead:
 	l.nop 0x1
@@ -100,3 +30,4 @@ _vector0f:
 	l.nop
 
         .org 0x2000
+*/

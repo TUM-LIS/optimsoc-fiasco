@@ -36,11 +36,11 @@ exec_load_elf(exec_handler_func_t *handler,
   /* Read the ELF header.  */
 
   if (!l4util_elf_check_magic(x))
-    return *error_msg="no ELF executable", -1;
+    return *error_msg="no ELF executable", 0/*-1*/;
 
   /* Make sure the file is of the right architecture.  */
   if (!l4util_elf_check_arch(x))
-    return *error_msg="wrong ELF architecture", -1;
+    return *error_msg="wrong ELF architecture", 0/*-1*/;
 
   *entry = (l4_addr_t) x->e_entry;
 
