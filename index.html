@@ -88,15 +88,15 @@ simple system.</p>
 <p>TODO: The long story of the 14 packages</p>
 
 <p>Build:
-<pre><code>$l4/> make B=mybuild
-$l4/> cd mybuild
-$l4/mybuild/> make pkg S=ldscripts,libgcc-pure,l4sys,crtn,uclibc-headers,cxx,uclibc-minimal,libgcc,drivers-frst,l4util,libstdc++-headers,cxx_libc_io,cxx_libc_io,l4re,bootstrap
+<pre><code>$l4/> make B=or1kbuild
+$l4/> cd or1kbuild
+$l4/or1kbuild/> make pkg S=ldscripts,libgcc-pure,l4sys,crtn,uclibc-headers,cxx,uclibc-minimal,libgcc,drivers-frst,l4util,libstdc++-headers,cxx_libc_io,cxx_libc_io,l4re,libsigma0,sigma0,foo,bootstrap
 </code></pre>
 
 <p>At this point it complains about missing modules, remove them:</p>
 
 <pre><code>
-$l4/mybuild> cd pkg/bootstrap/server/src/OBJ-or1k_/
+$l4/or1kbuild/> cd pkg/bootstrap/server/src/OBJ-or1k_/
 </code></pre>
 
 <p>Remove <code>mod00.bin</code>, <code>mod01.bin</code>
@@ -138,7 +138,7 @@ $src/OBJ-or1k_/> /path/to/or1k/sim -f /path/to/config.cfg bootstrap.auto-build-u
 
 <h4>Required files</h4>
 
-<p>The first parts which were needed to build the kernel are located in: <code>kernel/fiasco/src/kern/</code>, <code>kernel/fiasco/src/drivers/</code>, <code>kernel/fiasco/src/lib/libk</code> and <code>kernel/fiasco/src/lib/minilibc</code>. Each location needs a folder for the new architecture. </p>
+<p>The first parts which were needed to build the kernel are located in: <code>kernel/fiasco/src/kern/</code>, <code>kernel/fiasco/src/drivers/</code>, <code>kernel/fiasco/src/lib/libk</code> and <code>kernel/fiasco/src/lib/minilibc</code>. Each location needs a folder for the new architecture, e.g. <code>ARCH-or1k</code>.</p>
 
 <h4>Exception vectors</h4>
 
@@ -154,13 +154,47 @@ $kernel/fiasco/> cd or1kbuild
 $kernel/fiasco/> INCLUDE_OR1K=y make config
 </code></pre>
 
-Select the or1k architecture and exit the configuration menu and build the kernel.
+Select the or1k architecture and exit the configuration menu and build the kernel:
 
 <pre><code>
 $kernel/fiasco/> make 
 </code></pre>
 
 After a successful build there should now be a image called <code>fiasco</code>.
+This needs now to be packed into the L4 bootstrap image. This can be done by:
+
+
+<pre><code>
+$l4/or1kbuild/pkg/bootstrap/server/src/OBJ-or1k_/> make E=hello BOOTSTRAP_SEARCH_PATH=/path/to/fiasco/kernel/image:/path/to/l4/or1kbuild/pkg/foo/OBJ-or1k_/
+</code></pre>
+
+Now there should be a <code>bootstrap_hello.elf</code> which can be simulated similar as before:
+
+<pre><code>
+$l4/or1kbuild/pkg/bootstrap/server/src/OBJ-or1k_/> /path/to/or1k/sim -f /path/to/config.cfg bootstrap_hello.elf
+</code></pre>
+
+<h4>Remarks for simulating and analyzing the code</h4>
+
+With the or1k simulator it is possible to start the simulation interactively by appending <code>-i</code> to the command.
+With <code>help</code> the available commands are displayed. Important ones are, 
+
+<pre><code>
+r                :  show registers
+t                : 	execute next instruction
+run &lt;num&gt; [hush] :  execute &lt;num&gt; instructions [suppress output, much faster]
+info             :  show some spr's, e.g. uart
+dm 0x&lt;hex&gt;       :  dump memory
+</code></pre>
+
+To analyze the image the following can be used:
+
+<pre><code>
+$l4/or1kbuild/pkg/bootstrap/server/src/OBJ-or1k_/> or1k-linux-uclibc-objdump -lCSD bootstrap_hello.elf | less
+</code></pre>
+
+For this it is helpful to use the <code>fiasco.image</code> file in the kernel build directory, because it is the not stripped version.
+
 
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
