@@ -132,6 +132,36 @@ end
 <pre><code>
 $src/OBJ-or1k_/> /path/to/or1k/sim -f /path/to/config.cfg bootstrap.auto-build-useless.elf
 </code></pre>
+
+
+<h3>Porting the kernel</h3>
+
+<h4>Required files</h4>
+
+<p>The first parts which were needed to build the kernel are located in: <code>kernel/fiasco/src/kern/</code>, <code>kernel/fiasco/src/drivers/</code>, <code>kernel/fiasco/src/lib/libk</code> and <code>kernel/fiasco/src/lib/minilibc</code>. Each location needs a folder for the new architecture. </p>
+
+<h4>Exception vectors</h4>
+
+<p>The exception vectors are defined in the <code>crt0.S</code> of the kernel. It is defined as a separate section of an executable code. With the <code>kernel.or1k.ld</code> linker script the desired addresses are defined. The L4 bootstrap is then moving the code to the defined address.</p>
+</html>
+
+<h4>Building the kernel</h4>
+To build the kernel, execute the following:
+
+<pre><code>
+$kernel/fiasco/> make BUILDDIR=or1kbuild
+$kernel/fiasco/> cd or1kbuild
+$kernel/fiasco/> INCLUDE_OR1K=y make config
+</code></pre>
+
+Select the or1k architecture and exit the configuration menu and build the kernel.
+
+<pre><code>
+$kernel/fiasco/> make 
+</code></pre>
+
+After a successful build there should now be a image called <code>fiasco</code>.
+
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
   </body>
