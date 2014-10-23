@@ -31,8 +31,8 @@ GREP		:= GREP_OPTIONS= grep
 AWKP		?= gawk --posix
 CFLAGS		:=
 CXXFLAGS	:= -std=c++0x
-OPT_CFLAGS	:= -O2
-OPT_CXXFLAGS	:= -O2
+OPT_CFLAGS	:= -O1
+OPT_CXXFLAGS	:= -O1
 NOOPT_CFLAGS	:= -Os
 NOOPT_CXXFLAGS	:= -Os
 ARFLAGS		:= crs
