@@ -228,7 +228,7 @@ all:: $(addprefix $(IMAGES_DIR)/,$(INSTALL_FILES))
 $(IMAGES_DIR)/%: $(od)%
 	$(VERBOSE)if [ "$(ENTRY)" != "auto-build-entry" ]; then \
 	  echo "  ==> Installing $< in image directory";        \
-	  (cd $(dir $@) && $(LN) -sf $(if $(od),,$(PWD)/)$<);   \
+	  (mkdir -p $(dir $@) && cd $(dir $@) && $(LN) -sf $(if $(od),,$(PWD)/)$<);   \
 	fi
 else
   INSTALL_FILES = bootstrap
