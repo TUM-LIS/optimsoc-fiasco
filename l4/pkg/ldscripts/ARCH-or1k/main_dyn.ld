@@ -1,6 +1,5 @@
 /* Default linker script, for normal executables */
-OUTPUT_FORMAT("elf32or1k", "elf32or1k",
-	      "elf32or1k")
+OUTPUT_FORMAT("elf32-or1k")
 OUTPUT_ARCH(or1k)
 ENTRY(_start)
 

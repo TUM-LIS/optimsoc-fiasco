@@ -1,6 +1,5 @@
 /* Script for ld --shared: link shared library */
-OUTPUT_FORMAT("elf32-or1k", "elf32or1k",
-	      "elf32or1k")
+OUTPUT_FORMAT("elf32-or1k")
 OUTPUT_ARCH(or1k)
 ENTRY(_start)
 
