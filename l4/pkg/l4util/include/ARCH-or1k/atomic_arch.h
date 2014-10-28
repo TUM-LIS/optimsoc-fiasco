@@ -17,7 +17,7 @@
 
 #include <l4/sys/atomic.h>
 
-/*#ifdef __GNUC__
+#ifdef __GNUC__
 
 EXTERN_C_BEGIN
 
@@ -97,5 +97,4 @@ l4util_dec32_res(volatile l4_uint32_t *dest)
 EXTERN_C_END
 
 #endif //__GNUC__
-*/
 #endif /* ! __L4UTIL__INCLUDE__ARCH_SPARC__ATOMIC_ARCH_H__ */
