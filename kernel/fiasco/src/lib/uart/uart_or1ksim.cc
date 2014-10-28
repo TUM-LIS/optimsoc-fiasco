@@ -116,7 +116,9 @@ namespace L4
 
   bool Uart_or1ksim::change_mode(Transfer_mode, Baud_rate r)
   {
-    return false;
+		// for simulation no changes are necessary
+		// tell calling function everything work ok, otherwise it will fail to go on
+    return true;
   }
 
   int Uart_or1ksim::get_char(bool blocking) const
@@ -160,6 +162,7 @@ namespace L4
       cnt.set(5000000);
       while (cnt.test(!(_regs->read<unsigned char>(UART_LSR) & UART_LSR_THRE)))
 				;
+
       out_char(*s++);
 		}
 
