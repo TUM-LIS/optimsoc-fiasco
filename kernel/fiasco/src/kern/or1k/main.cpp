@@ -23,51 +23,51 @@ IMPLEMENTATION [or1k]:
 
 #include "processor.h"
 #include "boot_info.h"
-/*
+
 static int exit_question_active = 0;
 
 extern "C" void __attribute__ ((noreturn))
 _exit(int)
 {
-  if (exit_question_active)
-    platform_reset();
+		if (exit_question_active)
+				platform_reset();
 
-  while (1)
-    {
-      Proc::halt();
-      Proc::pause();
-    }
+		while (1)
+		{
+				Proc::halt();
+				Proc::pause();
+		}
 }
 
 
 static void exit_question()
 {
-  exit_question_active = 1;
+		exit_question_active = 1;
 
-  while (1)
-    {
-      puts("\nReturn reboots, \"k\" enters L4 kernel debugger...");
+		while (1)
+		{
+				puts("\nReturn reboots, \"k\" enters L4 kernel debugger...");
 
-      char c = Kconsole::console()->getchar();
+				char c = Kconsole::console()->getchar();
 
-      if (c == 'k' || c == 'K')
-	{
-	  kdb_ke("_exit");
-	}
-      else
-	{
-	  // it may be better to not call all the destruction stuff
-	  // because of unresolved static destructor dependency
-	  // problems.
-	  // SO just do the reset at this point.
-	  puts("\033[1mRebooting...\033[0m");
-	  platform_reset();
-	  break;
-	}
-    }
+				if (c == 'k' || c == 'K')
+				{
+						kdb_ke("_exit");
+				}
+				else
+				{
+						// it may be better to not call all the destruction stuff
+						// because of unresolved static destructor dependency
+						// problems.
+						// SO just do the reset at this point.
+						puts("\033[1mRebooting...\033[0m");
+						platform_reset();
+						break;
+				}
+		}
 }
 
-*/
+
 #include "thread_state.h"
 int main()
 {
@@ -76,7 +76,7 @@ int main()
 
   // make some basic initializations, then create and run the kernel
   // thread
-  //set_exit_question(&exit_question);
+  set_exit_question(&exit_question);
 
   // disallow all interrupts before we selectively enable them
   //  pic_disable_all();
@@ -87,6 +87,15 @@ int main()
   check(kernel->bind(ktask, User<Utcb>::Ptr(0)));
   //kdb_ke("init");
 
+  Mem_unit::tlb_flush();
+
   // switch to stack of kernel thread and bootstrap the kernel
+	asm volatile
+		(" l.add r1, %0, r0\n\t" // stack pointer of kernel
+		 " l.add r3, %1, r0\n\t" // first argument is the "this" pointer
+		 " l.jal call_bootstrap\n\t" //goto to the bootsrap
+     :
+		 : "r" (kernel->init_stack()), "r" (kernel)
+		);
 }
 

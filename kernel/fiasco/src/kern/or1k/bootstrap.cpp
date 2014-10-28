@@ -11,7 +11,6 @@ IMPLEMENTATION [or1k]:
 #include <cstdlib>
 #include <cstdio>
 
-//XXX cbass: implement me
 extern "C" void __attribute__ ((noreturn))
 _exit(int)
 {

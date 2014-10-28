@@ -175,7 +175,7 @@ INTERFACES_JDB		+= $(INTERFACES_JDB-y)
 endif
 
 CXXSRC_KERNEL		:= kernel_panic.cc libc_backend_lock.cc
-# ASSRC_KERNEL		:= exceptions.S
+ASSRC_KERNEL		:= exceptions.S
 
 NOOPT			+= $(filter jdb%,\
 			     $(foreach in,$(INTERFACES_KERNEL), \
