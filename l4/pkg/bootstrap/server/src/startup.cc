@@ -1454,7 +1454,6 @@ startup(l4util_mb_info_t *mbi, l4_umword_t flag,
   print_module_name(L4_CONST_CHAR_PTR(mb_mod[kernel_module].cmdline),
 		    "[KERNEL]");
   printf(" at "l4_addr_fmt"\n", boot_info.kernel_start);
-  printf("DEBUG TEST: %x \n", boot_info.kernel_start);
 
 #if defined(ARCH_x86)
   asm volatile
