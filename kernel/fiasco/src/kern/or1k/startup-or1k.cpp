@@ -29,10 +29,12 @@ IMPLEMENT FIASCO_INIT FIASCO_NOINLINE
 void
 Startup::stage1()
 {
+  printf("\n\tEntering: Startup::stage1\n");
   Proc::cli();
   Boot_info::init();
   Cpu::early_init();
   Config::init();
+  printf("\tDone: Startup::stage1\n");
 }
 
 IMPLEMENT FIASCO_INIT FIASCO_NOINLINE
@@ -40,11 +42,15 @@ void
 Startup::stage2()
 {
   Cpu_number const boot_cpu = Cpu_number::boot_cpu();
-  puts("Hello from Startup::stage2");
-  //Mem_space::init_page_sizes();
+  printf("\tEntering: Startup::stage2\n");
+  //puts("Hello from Startup::stage2");
+  Mem_space::init_page_sizes();
+  printf("\tStartup::stage2: Mem_space finished \n");
 
   Kip_init::init();
-  //Kmem_alloc::init();
+  printf("\tStartup::stage2: Kip_init finished \n");
+  Kmem_alloc::init();
+  printf("\tStartup::stage2: Kmem_alloc finished \n");
 
   // Initialize cpu-local data management and run constructors for CPU 0
   Per_cpu_data::init_ctors();
@@ -66,4 +72,5 @@ Startup::stage2()
   Timer::init(boot_cpu);
   //Kern_lib_page::init();
   Utcb_init::init();
+  printf("Startup::stage2 finished\n");
 }

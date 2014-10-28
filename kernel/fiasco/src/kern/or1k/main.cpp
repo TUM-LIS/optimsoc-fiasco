@@ -82,6 +82,7 @@ int main()
   //  pic_disable_all();
 
   // create kernel thread
+	printf("\n Entering main \n");
   static Kernel_thread *kernel = new (Ram_quota::root) Kernel_thread;
   Task *const ktask = Kernel_task::kernel_task();
   check(kernel->bind(ktask, User<Utcb>::Ptr(0)));

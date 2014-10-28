@@ -14,8 +14,7 @@ public:
     Syscalls_phys        = 0x4000,
     Tbuf_status_page     = 0x5000,
     Kernel_start         = 0x6000,   //end phys pool
-    Syscalls             = 0xfffff000,
-
+    Syscalls             = 0x00000c00,
     User_max             = 0xf0000000,
     Tcbs                 = 0xc0000000,
     Utcb_addr            = User_max - 0x2000,
@@ -64,12 +63,16 @@ Mem_layout::phys_to_pmem (Address addr)
   extern Mword kernel_srmmu_l1[256];
   for (unsigned i = 0xF0; i < 0xFF; ++i)
     {
+			printf(" -- lets check some stuff:  %08lx\n", kernel_srmmu_l1[i]);
       if (kernel_srmmu_l1[i] != 0)
         {
+					printf(" -- first if succeeded\n");
           Mword v_page = addr &  (0xFF << Pte_ptr::Pdir_shift);
           Mword entry  = (kernel_srmmu_l1[i] & Pte_ptr::Ppn_mask) << Pte_ptr::Ppn_addr_shift;
           if (entry == v_page)
+					{printf(" -- second if succeeded\n");
             return (i << Pte_ptr::Pdir_shift) | (addr & ~(0xFF << Pte_ptr::Pdir_shift));
+						}
         }
     }
   return ~0L;

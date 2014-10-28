@@ -321,6 +321,14 @@ Page_number
 Mem_space::canonize(Page_number v)
 { return v; }
 
+PUBLIC static
+void
+Mem_space::init_page_sizes()
+{
+	add_page_size(Page_order(Config::PAGE_SHIFT));
+	add_page_size(Page_order(20)); // 1MB
+}
+
 IMPLEMENT inline
 void
 Mem_space::v_set_access_flags(Vaddr, L4_fpage::Rights)
