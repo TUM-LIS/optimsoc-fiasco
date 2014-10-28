@@ -1,10 +1,10 @@
 INTERFACE [libuart]:
 
-#include "io_regblock_asi.h"
+#include "io_regblock.h"
 
 EXTENSION class Uart
 {
-  L4::Io_register_block_asi _regs;
+  L4::Io_register_block_mmio _regs;
 };
 
 IMPLEMENTATION [libuart]:

@@ -32,7 +32,7 @@ int Kconsole::getchar(bool blocking)
   if (!blocking)
     return Mux_console::getchar(false);
 
-  while (1)
+  while (0)
     {
       int c;
       if ((c = Mux_console::getchar(false)) != -1)
