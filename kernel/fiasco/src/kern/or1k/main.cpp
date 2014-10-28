@@ -93,7 +93,7 @@ int main()
 	asm volatile
 		(" l.add r1, %0, r0\n\t" // stack pointer of kernel
 		 " l.add r3, %1, r0\n\t" // first argument is the "this" pointer
-		 " l.jal call_bootstrap\n\t" //goto to the bootsrap
+		 " l.jal call_bootstrap\n\t" //goto to the bootstrap
      :
 		 : "r" (kernel->init_stack()), "r" (kernel)
 		);

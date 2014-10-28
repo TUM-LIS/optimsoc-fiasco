@@ -32,7 +32,7 @@ class Platform_or1ksim : public Platform_single_region_ram
 
   void init()
   {
-    static L4::Io_register_block_mmio r(0x02000000); 
+    static L4::Io_register_block_mmio r(0x80000100); 
     static L4::Uart_or1ksim _uart; 
     _uart.startup(&r); 
 /*		while(true) */

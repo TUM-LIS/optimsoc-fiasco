@@ -5,7 +5,7 @@ IMPLEMENTATION[or1k && or1ksim]:
 IMPLEMENT static
 Address Boot_info::uart_base()
 {
-  return ~0;
+  return Uart_base;
 }
 
 IMPLEMENT static

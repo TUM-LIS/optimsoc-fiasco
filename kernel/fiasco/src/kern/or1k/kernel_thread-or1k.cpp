@@ -1,7 +1,6 @@
 IMPLEMENTATION [or1k]:
 
 #include "mem_layout.h"
-#include "psr.h"
 IMPLEMENT inline
 void
 Kernel_thread::free_initcall_section()

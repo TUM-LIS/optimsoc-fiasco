@@ -1008,9 +1008,8 @@ construct_mbi(l4util_mb_info_t *mbi)
   mbi->flags      |= L4UTIL_MB_MODS;
   mbi->mods_addr   = (l4_addr_t)mods;
 
-/*  printf("mbi->mods_count:  %lu\n", mbi->mods_count); */
-/*  printf("_module_info_start:  %lu\n", _module_info_start); */
-/*  printf("_module_info_end:  %lu\n", _module_info_end); */
+  printf("mbi->mods_count:  %lu\n", mbi->mods_count); 
+  printf("mbi->mods_addr:  %lx\n", mbi->mods_addr); 
   assert(mbi->mods_count >= 2);
 
   for (i = 0; i < mbi->mods_count; ++i)
@@ -1267,7 +1266,7 @@ startup(l4util_mb_info_t *mbi, l4_umword_t flag,
   (void)flag;
 #elif defined(ARCH_or1k)
   // TODO: something needed
-/*  asm("l.sys 0x0815"); */
+  /* asm("l.sys 0x0815"); */
 	/* address of static my_loader_mbi is now stored in mbi */
 	/* since LOADER_MBI is true, this call will most likely be redundant */
   mbi = loader_mbi();
@@ -1278,6 +1277,7 @@ startup(l4util_mb_info_t *mbi, l4_umword_t flag,
 #error Unknown arch!
 #endif
 
+/* set the memory address according to command line argument or default value */
   setup_memory_map(mbi);
 
   /* basically add the bootstrap binary to the allocated regions */
@@ -1364,6 +1364,10 @@ startup(l4util_mb_info_t *mbi, l4_umword_t flag,
   print_module_name(L4_CONST_CHAR_PTR(mb_mod[kernel_module].cmdline),
       "[KERNEL]");
   putchar('\n');
+	printf(" mb_mod %u ", mb_mod);
+  putchar('\n');
+	printf(" kernel_module %u ", kernel_module);
+  putchar('\n');
 
   boot_info.kernel_start = load_elf_module(mb_mod + kernel_module);
 
@@ -1411,6 +1415,7 @@ startup(l4util_mb_info_t *mbi, l4_umword_t flag,
 
   regions.optimize();
   regions.dump();
+	ram.dump();
 
   if (char *c = check_arg(mbi, "-presetmem="))
     {
@@ -1449,6 +1454,7 @@ startup(l4util_mb_info_t *mbi, l4_umword_t flag,
   print_module_name(L4_CONST_CHAR_PTR(mb_mod[kernel_module].cmdline),
 		    "[KERNEL]");
   printf(" at "l4_addr_fmt"\n", boot_info.kernel_start);
+  printf("DEBUG TEST: %x \n", boot_info.kernel_start);
 
 #if defined(ARCH_x86)
   asm volatile
@@ -1491,9 +1497,15 @@ startup(l4util_mb_info_t *mbi, l4_umword_t flag,
 
 #elif defined(ARCH_or1k)
   // TODO: The arm code looked quite matching..
-/*  asm("l.sys 0x0815"); */
   typedef void (*startup_func)(void);
   startup_func f = (startup_func)boot_info.kernel_start;
+	/*
+	asm volatile("l.lwz r13,0(%0)\n\t"
+							 "l.jr r13\n\t"
+							 "l.nop\n\t"
+							:
+							: "r" (boot_info.kernel_start));
+	*/
   f();
 #else
 
