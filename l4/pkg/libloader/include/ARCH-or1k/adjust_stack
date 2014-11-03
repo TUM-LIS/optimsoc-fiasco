@@ -1,0 +1,16 @@
+#pragma once
+
+namespace Ldr {
+
+
+//TODO: what is adjust_sp doing really?
+inline
+char *adjust_sp(char *old_sp, l4_umword_t *offs = 0)
+{
+	if (offs)
+		*offs = 0;
+		//TODO: really just a alignment?
+  return (char *)((l4_umword_t)old_sp & ~7);
+}
+
+}
