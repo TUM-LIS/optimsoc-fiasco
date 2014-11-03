@@ -681,7 +681,6 @@ config SERIAL
 
 menuconfig JDB
 	bool "JDB kernel debugger"
-	default y
 	help
 	  The powerful Fiasco kernel debugger.
 
