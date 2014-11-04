@@ -64,7 +64,8 @@ namespace std
     virtual const char* what() const throw();
   };
 
-#if __cplusplus >= 201103L
+//#if __cplusplus >= 201103L
+#if 1
   class bad_array_new_length : public bad_alloc
   {
   public:
