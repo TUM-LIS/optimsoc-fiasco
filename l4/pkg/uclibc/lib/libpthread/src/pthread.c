@@ -54,7 +54,7 @@ extern int _h_errno;
 /* We need the global/static resolver state here.  */
 # include <resolv.h>
 # undef _res
-extern struct __res_state *__resp;
+extern __thread struct __res_state *__resp;
 # endif
 #endif
 
