@@ -6,17 +6,26 @@ inline
 bool
 cas_unsafe( Mword *ptr, Mword oldval, Mword newval )
 {
-  asm volatile ("l.sys 0x0815");
-	//panic("%s not implemented", __func__);
-	return false;
+	Mword ret;
+  asm volatile (
+		"	1: l.lwa r11,0(%1)	\n\t"
+		"	l.sfeq r11,%2								\n\t"
+		"	l.bnf 2							\n\t"
+		"	l.swa 0(%1),%3							\n\t"
+		"	l.bnf 1							\n\t"
+		"	2: l.nop							\n\t"
+		: "=r" (ret) 
+		: "r" (ptr), "r" (oldval), "r" (newval)
+		: );
+
+	return ret;
 }
 
 /* dummy implement */
 bool
 cas2_unsafe( Mword *, Mword *, Mword *)
 {
-  asm volatile ("l.sys 0x0815");
-	//panic("%s not implemented", __func__);
+	panic("%s not implemented", __func__);
   return false;
 }
 

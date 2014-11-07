@@ -334,7 +334,7 @@ atomic_mp_add(Mword *l, Mword value)
   Mword tmp, ret;
 
   asm volatile (
-      "l.sys 0x0815");
+      "l.sys 0x0818");
 }
 
 inline
@@ -344,7 +344,7 @@ atomic_mp_and(Mword *l, Mword value)
   Mword tmp, ret;
 
   asm volatile (
-      "l.sys 0x0815");
+      "l.sys 0x0819");
 }
 
 inline
@@ -354,7 +354,7 @@ atomic_mp_or(Mword *l, Mword value)
   Mword tmp, ret;
 
   asm volatile (
-      "l.sys 0x0815");
+      "l.sys 0x081a");
 }
 
 
@@ -365,7 +365,7 @@ mp_cas_arch(Mword *m, Mword o, Mword n)
   Mword tmp, res;
 
   asm volatile
-    ("l.sys 0x0815");
+    ("l.sys 0x081b");
 
   // res == 0 is ok
   // res == 1 is failed
@@ -384,7 +384,7 @@ mp_cas2_arch(char *m, Mword o1, Mword o2, Mword n1, Mword n2)
   Mword res;
 
   asm volatile
-    ("l.sys 0x0815");
+    ("l.sys 0x081c");
 
   return !res;
 }
