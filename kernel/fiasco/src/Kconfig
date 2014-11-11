@@ -28,7 +28,7 @@ menu "Target configuration"
 
 choice
 	prompt "Architecture"
-	default IA32
+	default OR1K
 
 config IA32
 	bool "Intel IA-32 processor family"
