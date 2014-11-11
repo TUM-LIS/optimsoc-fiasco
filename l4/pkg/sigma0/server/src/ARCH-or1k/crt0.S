@@ -40,7 +40,6 @@ _start:
 #endif
 
 	/* at some point go to the init function of sigma0 */
-	l.sys 0x815
 	l.j init
 
 .section ".bss"
