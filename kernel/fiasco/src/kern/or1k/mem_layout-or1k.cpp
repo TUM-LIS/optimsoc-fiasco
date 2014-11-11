@@ -2,13 +2,15 @@ INTERFACE [or1k]:
 
 #include "initcalls.h"
 #include "template_math.h"
+#include <config.h>
+#include <cstdio>
 
 EXTENSION class Mem_layout
 {
 
 //TODO cbass: check what can be omitted
 public:
-  enum Phys_layout : Address
+  enum Virt_layout : Address
   {
     Utcb_ptr_page        = 0x3000,
     Syscalls_phys        = 0x4000,
@@ -30,8 +32,17 @@ public:
     Kernel_max           = 0x00000000,
   };
 
+	enum Phys_layout : Address {
+		Ram_phys_base	= 0x10000000
+	};
+
   static Address Tbuf_buffer_area;
   static Address Tbuf_ubuffer_area;
+public:
+	static void add_pmem(Address phys, Address virt, unsigned long size);
+
+private:
+  static unsigned short __ph_to_pm[1UL<<(32-Config::SUPERPAGE_SHIFT)];
 };
 
 //---------------------------------------------------------------------------
@@ -56,26 +67,39 @@ IMPLEMENTATION [or1k]:
 Address Mem_layout::Tbuf_buffer_area = 0;
 Address Mem_layout::Tbuf_ubuffer_area = 0;
 
+unsigned short Mem_layout::__ph_to_pm[1<<(32-Config::SUPERPAGE_SHIFT)];
+
 PUBLIC static
 Address
 Mem_layout::phys_to_pmem (Address addr)
 {
-  extern Mword kernel_srmmu_l1[256];
-  for (unsigned i = 0xF0; i < 0xFF; ++i)
-    {
-			printf(" -- lets check some stuff:  %08lx\n", kernel_srmmu_l1[i]);
-      if (kernel_srmmu_l1[i] != 0)
-        {
-					printf(" -- first if succeeded\n");
-          Mword v_page = addr &  (0xFF << Pte_ptr::Pdir_shift);
-          Mword entry  = (kernel_srmmu_l1[i] & Pte_ptr::Ppn_mask) << Pte_ptr::Ppn_addr_shift;
-          if (entry == v_page)
-					{printf(" -- second if succeeded\n");
-            return (i << Pte_ptr::Pdir_shift) | (addr & ~(0xFF << Pte_ptr::Pdir_shift));
-						}
-        }
-    }
-  return ~0L;
+	printf("phys_to_pmem\t %08lx\n", addr);
+  Address virt = ((unsigned long)__ph_to_pm[addr >> Config::SUPERPAGE_SHIFT])
+    << 16;
+	
+	return addr;
+
+  if (!virt)
+    return ~0UL;
+
+  return virt | (addr & (Config::SUPERPAGE_SIZE-1));
+}
+
+// add a pair of physical and virtual memory page to the array were such information is stored
+IMPLEMENT inline NEEDS[<config.h>]
+void
+Mem_layout::add_pmem(Address phys, Address virt, unsigned long size)
+{
+	// do it page wise
+	for(;size >= Config::SUPERPAGE_SIZE; size -= Config::SUPERPAGE_SIZE)
+	{
+		printf("Mem_layout::add_pmem: added phys: %08lx to virt: %08lx\n", phys >> Config::SUPERPAGE_SHIFT, virt >> 16);
+		// only the upper bits are important
+		__ph_to_pm[phys >> Config::SUPERPAGE_SHIFT] = virt >> 16;
+		// go to next page
+		phys += Config::SUPERPAGE_SIZE;
+		virt += Config::SUPERPAGE_SIZE;
+	}
 }
 
 PUBLIC static inline

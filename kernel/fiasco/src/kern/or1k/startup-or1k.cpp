@@ -11,6 +11,7 @@ IMPLEMENTATION [or1k]:
 #include "kmem_alloc.h"
 //#include "kmem_space.h"
 #include "mem_space.h"
+#include "mem_layout.h"
 #include "per_cpu_data.h"
 #include "per_cpu_data_alloc.h"
 #include "perf_cnt.h"
@@ -29,7 +30,8 @@ IMPLEMENT FIASCO_INIT FIASCO_NOINLINE
 void
 Startup::stage1()
 {
-  printf("\n\tEntering: Startup::stage1\n");
+  printf("\nEntering: Startup::stage1\n");
+	Mem_layout::add_pmem(Mem_layout::Ram_phys_base, Mem_layout::Map_base, 4<<20);
   Proc::cli();
   Boot_info::init();
   Cpu::early_init();

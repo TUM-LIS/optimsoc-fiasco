@@ -1,6 +1,7 @@
 IMPLEMENTATION [or1k]:
 
 #include "mem_layout.h"
+#include <cstdio>
 IMPLEMENT inline
 void
 Kernel_thread::free_initcall_section()
@@ -15,6 +16,7 @@ IMPLEMENT FIASCO_INIT
 void
 Kernel_thread::bootstrap_arch()
 {
+	printf("\x1b[31m Kernel_thread::bootstrap_arch() \x1b[0m");
   //status for kernel thread
   //Return_frame *rf = nonull_static_cast<Return_frame*>(current()->regs());
   //rf->srr1 = Msr::Msr_kernel;
