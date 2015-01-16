@@ -81,6 +81,7 @@ PROTECTED inline NEEDS["kmem_alloc.h"]
 bool
 Mem_space::initialize()
 {
+    printf("%s FIXME\n", __func__);
   void *b;
   if (EXPECT_FALSE(!(b = Kmem_alloc::allocator()
 	  ->q_alloc(_quota, Config::PAGE_SHIFT))))
@@ -95,8 +96,9 @@ PUBLIC
 Mem_space::Mem_space(Ram_quota *q, Dir_type* pdir)
   : _quota(q), _dir(pdir)
 {
+    printf("%s FIXME\n", __func__);
   _kernel_space = this;
-    printf("\x1b[31mMem_space: _kernel_space: %p\n\x1b[0m", this);
+  printf("_kernel_space: %p\n", this);
   _current.cpu(Cpu_number::boot_cpu()) = this;
 }
 
@@ -127,6 +129,7 @@ PUBLIC static inline
 bool
 Mem_space::is_full_flush(L4_fpage::Rights rights)
 {
+    printf("%s FIXME\n", __func__);
   return rights & L4_fpage::Rights::R();
 }
 
@@ -134,6 +137,7 @@ PUBLIC inline NEEDS["cpu.h"]
 static bool
 Mem_space::has_superpages()
 {
+    printf("%s FIXME\n", __func__);
   return Cpu::have_superpages();
 }
 
@@ -142,6 +146,7 @@ PUBLIC static inline NEEDS["mem_unit.h"]
 void
 Mem_space::tlb_flush(bool = false)
 {
+    printf("%s FIXME\n", __func__);
   //Mem_unit::tlb_flush();
 }
 
@@ -149,15 +154,7 @@ PUBLIC static inline NEEDS["mem_unit.h"]
 void
 Mem_space::tlb_flush_spaces(bool all, Mem_space *s1, Mem_space *s2)
 {
-  if (all) // || !Have_asids)
-    Mem_unit::tlb_flush();
-  else
-    {
-      if (s1)
-        s1->tlb_flush(true);
-      if (s2)
-        s2->tlb_flush(true);
-    }
+
 }
 
 /*
@@ -182,7 +179,9 @@ Mem_space::set_attributes(Address virt, unsigned page_attribs)
 PROTECTED inline
 void
 Mem_space::destroy()
-{}
+{
+    printf("%s FIXME\n", __func__);
+}
 
 /**
  * Destructor.  Deletes the address space and unregisters it from
@@ -192,6 +191,7 @@ PRIVATE
 void
 Mem_space::dir_shutdown()
 {
+    printf("%s FIXME\n", __func__);
 
   // free ldt memory if it was allocated
   //free_ldt_memory();
@@ -210,6 +210,7 @@ IMPLEMENT inline
 Mem_space *
 Mem_space::current_mem_space(Cpu_number cpu) /// XXX: do not fix, deprecated, remove!
 {
+    printf("(NOT IMPLEMENTED) %s in %s\n", __func__, __FILE__);
   return _current.cpu(cpu);
 }
 
@@ -236,6 +237,7 @@ Mem_space::Status
 Mem_space::v_insert(Phys_addr phys, Vaddr virt, Page_order size,
 		    Attr page_attribs)
 {
+    printf("%s FIXME\n", __func__);
   (void)phys; (void)virt; (void)page_attribs;
   assert (cxx::get_lsb(Phys_addr(phys), size) == 0);
   assert (cxx::get_lsb(Virt_addr(virt), size) == 0);
@@ -256,6 +258,7 @@ PUBLIC inline NEEDS ["paging.h"]
 Address
 Mem_space::virt_to_phys (Address virt) const
 {
+    printf("%s FIXME\n", __func__);
   return dir()->virt_to_phys(virt);
 }
 
@@ -263,6 +266,7 @@ PUBLIC inline
 virtual Address
 Mem_space::virt_to_phys_s0(void *a) const
 {
+    printf("%s FIXME\n", __func__);
   return dir()->virt_to_phys((Address)a);
 }
 
@@ -270,6 +274,7 @@ PUBLIC inline
 Address
 Mem_space::pmem_to_phys (Address virt) const
 {
+    printf("%s FIXME\n", __func__);
   return virt;
 }
 
@@ -295,8 +300,8 @@ bool
 Mem_space::v_lookup(Vaddr virt, Phys_addr *phys, Page_order *order,
 		    Attr *page_attribs)
 {
-  (void)virt; (void)phys; (void)order; (void)page_attribs;
-  return false;
+    printf("%s FIXME\n", __func__);
+
 }
 
 /** Delete page-table entries, or some of the entries' attributes.  This
@@ -313,24 +318,27 @@ L4_fpage::Rights
 Mem_space::v_delete(Vaddr virt, Page_order size,
 		    L4_fpage::Rights page_attribs)
 {
-  (void)virt; (void)size; (void)page_attribs;
-  return page_attribs; 
+    printf("%s FIXME\n", __func__);
+
 }
 
 PUBLIC static inline
 Page_number
 Mem_space::canonize(Page_number v)
-{ return v; }
+{  printf("%s FIXME\n", __func__);
+ return v; }
 
 PUBLIC static
 void
 Mem_space::init_page_sizes()
 {
-	add_page_size(Page_order(Config::PAGE_SHIFT));
-	add_page_size(Page_order(20)); // 1MB
+    printf("%s FIXME\n", __func__);
+
 }
 
 IMPLEMENT inline
 void
 Mem_space::v_set_access_flags(Vaddr, L4_fpage::Rights)
-{}
+{
+    printf("%s FIXME\n", __func__);
+}

@@ -40,7 +40,7 @@ IMPLEMENT inline
 void
 Context::switch_cpu(Context *t)
 {
-    printf("%s FIXME\n", __PRETTY_FUNCTION__);
+    printf("%s(%p) FIXME\n", __PRETTY_FUNCTION__, t);
     (void)t;
 }
 
@@ -53,6 +53,6 @@ Context::switch_cpu(Context *t)
 IMPLEMENT
 void Context::switchin_context(Context *from)
 {
-    printf("%s FIXME\n", __PRETTY_FUNCTION__);
+    printf("%s(%p) FIXME\n", __PRETTY_FUNCTION__, from);
   (void)from;
 }

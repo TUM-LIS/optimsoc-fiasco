@@ -67,12 +67,11 @@ void Kip_init::init()
   Kip::init_global_kip(kinfo);
 
   /* add kernel image */
-	//printf("\tWhile: Kip_init::init: add region 1\n");
-  kinfo->add_mem_region(Mem_desc(0,(Address)&Mem_layout::end - 1,
-                        Mem_desc::Reserved));
+/*kinfo->add_mem_region(Mem_desc(0,(Address)&Mem_layout::end - 1,
+                        Mem_desc::Reserved));*/
 
-	printf("\tWhile: Kip_init::init: add region 1\n");
-  kinfo->add_mem_region(Mem_desc(0, Mem_layout::User_max - 1, 
+  kinfo->add_mem_region(Mem_desc(0x2000, Mem_layout::User_max - 1,
 	                Mem_desc::Conventional, true));
 	printf("\tLeaving: Kip_init::init\n");
+
 }

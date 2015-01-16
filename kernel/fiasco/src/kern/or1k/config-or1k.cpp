@@ -8,14 +8,15 @@ EXTENSION class Config
 public:
   enum
   {
-    // cannot access user memory directly
+    // We cannot access the user memory directly
     Access_user_mem = No_access_user_mem,
 
+    // The shift is given by the architecture specification (8kB pages)
     PAGE_SHIFT = ARCH_PAGE_SHIFT,
     PAGE_SIZE  = 1 << PAGE_SHIFT,
     PAGE_MASK  = ~(PAGE_SIZE - 1),
 
-    SUPERPAGE_SHIFT = 22,
+    SUPERPAGE_SHIFT = 24,
     SUPERPAGE_SIZE  = 1 << SUPERPAGE_SHIFT,
     SUPERPAGE_MASK  = ~(SUPERPAGE_SIZE -1),
     hlt_works_ok = 1,

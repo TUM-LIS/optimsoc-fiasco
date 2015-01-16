@@ -217,12 +217,18 @@ Thread::bind(Task *t, User<Utcb>::Ptr utcb)
   Space::Ku_mem const *u = t->find_ku_mem(utcb, sizeof(Utcb));
 
   // kernel thread?
-  if (EXPECT_FALSE(utcb && !u))
+  if (EXPECT_FALSE(utcb && !u)) {
+      printf("Exit 1\n");
     return false;
+  }
 
   auto guard = lock_guard(_space.lock());
-  if (_space.space() != Kernel_task::kernel_task())
+  if (_space.space() != Kernel_task::kernel_task()) {
+      printf("_space: %p, _space.space(): %p\n", &_space, _space.space());
+      printf("Kernel_task::kernel_task(): %p\n", Kernel_task::kernel_task());
+      printf("Exit 2\n");
     return false;
+}
 
   _space.space(t);
   t->inc_ref();

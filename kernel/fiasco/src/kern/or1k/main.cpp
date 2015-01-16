@@ -83,7 +83,8 @@ int main()
 
   // create kernel thread
 	printf("\x1b[31m \n Entering main \n\x1b[0m");
-  static Kernel_thread *kernel = new (Ram_quota::root) Kernel_thread;
+	  static Kernel_thread *kernel = new (Ram_quota::root) Kernel_thread;
+  printf("ALLOCED kernel thread: %p\n", kernel);
   Task *const ktask = Kernel_task::kernel_task();
   check(kernel->bind(ktask, User<Utcb>::Ptr(0)));
   //kdb_ke("init");

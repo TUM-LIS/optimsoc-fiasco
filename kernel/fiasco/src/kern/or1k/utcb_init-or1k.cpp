@@ -9,8 +9,9 @@ IMPLEMENT
 void
 Utcb_init::init()
 {
+    // TODO: UTCB, where used?
   //Utcb_ptr_page is physical address
-  memset((void*)Mem_layout::Utcb_ptr_page, 0, Config::PAGE_SIZE);
+  //memset((void*)Mem_layout::Utcb_ptr_page, 0, Config::PAGE_SIZE);
 }
 
 PUBLIC static inline
