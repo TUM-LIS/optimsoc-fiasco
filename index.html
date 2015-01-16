@@ -114,6 +114,13 @@ $src/OBJ-or1k_/> /path/to/or1k/sim -m 0x2000000 bootstrap.auto-build-useless.elf
 
 <p>To activate the UART messages, a config file, with the following content, is needed:</p>
 <pre><code>
+section dmmu
+    enabled = 1
+    nsets = 2
+    nways = 1
+    pagesize = 0x2000
+end
+
 section memory
 	ce = 1
 	baseaddr = 0x00
