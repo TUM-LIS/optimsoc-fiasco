@@ -75,11 +75,8 @@ IMPLEMENT inline NEEDS[<config.h>]
 Address
 Mem_layout::phys_to_pmem(Address phys)
 {
-    printf("phys_to_pmem, phys: %p\n", phys);
     Address virt = ((unsigned long)__ph_to_pm[phys >> Config::SUPERPAGE_SHIFT])
       << 16;
-    printf("phys_to_pmem, index: %d\n", phys >> Config::SUPERPAGE_SHIFT);
-    printf("phys_to_pmem, virt: %d\n", virt);
 
     if (!virt)
       return ~0UL;

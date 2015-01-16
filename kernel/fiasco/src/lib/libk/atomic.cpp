@@ -341,8 +341,6 @@ inline
 void
 atomic_mp_and(Mword *l, Mword value)
 {
-  Mword tmp, ret;
-
   asm volatile (
       "l.sys 0x0819");
 }
@@ -351,8 +349,6 @@ inline
 void
 atomic_mp_or(Mword *l, Mword value)
 {
-  Mword tmp, ret;
-
   asm volatile (
       "l.sys 0x081a");
 }
@@ -362,31 +358,22 @@ inline
 bool
 mp_cas_arch(Mword *m, Mword o, Mword n)
 {
-  Mword tmp, res;
-
   asm volatile
     ("l.sys 0x081b");
 
   // res == 0 is ok
   // res == 1 is failed
 
-  return !res;
+  return false;
 }
 
 inline
 bool
 mp_cas2_arch(char *m, Mword o1, Mword o2, Mword n1, Mword n2)
 {
-  register Mword _n1 asm("r6") = n1;
-  register Mword _n2 asm("r7") = n2;
-  register Mword tmp1 asm("r8");
-  register Mword tmp2 asm("r9");
-  Mword res;
-
   asm volatile
     ("l.sys 0x081c");
-
-  return !res;
+  return false;
 }
 
 //---------------------------------------------------------------------------

@@ -81,9 +81,11 @@ namespace L4
   };
 
 
+//#define EMULATE_UART 1
+
   bool Uart_or1ksim::startup(Io_register_block const *regs)
   {
-
+#ifndef EMULATE_UART
 		unsigned int divisor;
 		unsigned int _board_clk_freq = 50000000;
 		unsigned int _board_uart_baud = 115200;
@@ -106,7 +108,7 @@ namespace L4
 		_regs->write<unsigned char>(UART_DLL, divisor & 0x000000ff);
 		_regs->write<unsigned char>(UART_DLM, (divisor >> 8) & 0x000000ff);
 		_regs->write<unsigned char>(UART_LCR, UART_LCR & ~(UART_LCR_DLAB));
-
+#endif
 
     return true;
   }
@@ -121,11 +123,13 @@ namespace L4
 
   int Uart_or1ksim::get_char(bool blocking) const
   {
+#ifndef EMULATE_UART
 		unsigned char lsr;
 /*		do { */
 			lsr = _regs->read<unsigned char>(UART_LSR);
 /*		} while ((lsr & UART_LSR_DR) != UART_LSR_DR); */
     return _regs->read<unsigned char>(UART_RX);
+#endif
   }
 
   int Uart_or1ksim::char_avail() const
@@ -135,6 +139,10 @@ namespace L4
 
   void Uart_or1ksim::out_char(char c) const
   {
+#ifdef EMULATE_UART
+      asm __volatile__("l.addi\tr3,%0,0": :"r" (c) : "r3");
+      asm __volatile__("l.nop 0x4": : );
+#else
 		unsigned char lsr;
 /*		do */
 /*		{ */
@@ -149,10 +157,20 @@ namespace L4
 			lsr = _regs->read<unsigned char>(UART_LSR);
 /*		} */
 /*		while ((lsr & UART_LSR_TEMT | UART_LSR_THRE) != UART_LSR_TEMT | UART_LSR_THRE); */
+#endif
   }
 
   int Uart_or1ksim::write(char const *s, unsigned long count) const
   {
+#ifdef EMULATE_UART
+      unsigned long c = count;
+      while (c--)
+      {
+          out_char(*s++);
+      }
+
+      return count;
+#else
     Poll_timeout_counter cnt(5000000);
     unsigned long c = count;
     while (c--)
@@ -165,5 +183,6 @@ namespace L4
 
 		cnt.set(5000000);
     return count;
+#endif
   }
 };

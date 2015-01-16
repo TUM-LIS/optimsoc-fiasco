@@ -1,9 +1,10 @@
 INTERFACE [or1k]:
 
 #include "entry_frame.h"
+#include "mem_unit.h"
 
 extern "C"
-Mword
+void
 pagefault_entry(Address, Mword, Mword, Return_frame *);
 
 EXTENSION class Mem_space
@@ -75,38 +76,29 @@ IMPLEMENTATION [or1k]:
 
 
 PUBLIC explicit inline
-Mem_space::Mem_space(Ram_quota *q) : _quota(q), _dir(0) {}
+Mem_space::Mem_space(Ram_quota *q) : _quota(q), _dir(0) {
+    printf("(NOT IMPLEMENTED) %s in %s\n", __func__, __FILE__);
+}
 
-PROTECTED inline NEEDS["kmem_alloc.h"]
+PROTECTED inline
 bool
 Mem_space::initialize()
 {
-    printf("%s FIXME\n", __func__);
-  void *b;
-  if (EXPECT_FALSE(!(b = Kmem_alloc::allocator()
-	  ->q_alloc(_quota, Config::PAGE_SHIFT))))
-    return false;
-
-  _dir = static_cast<Dir_type*>(b);
-  _dir->clear(true);	// initialize to zero
-  return true; // success
+    printf("(NOT IMPLEMENTED) %s in %s\n", __func__, __FILE__);
 }
 
 PUBLIC
 Mem_space::Mem_space(Ram_quota *q, Dir_type* pdir)
   : _quota(q), _dir(pdir)
 {
-    printf("%s FIXME\n", __func__);
-  _kernel_space = this;
-  printf("_kernel_space: %p\n", this);
-  _current.cpu(Cpu_number::boot_cpu()) = this;
+    printf("(NOT IMPLEMENTED) %s in %s\n", __func__, __FILE__);
 }
 
 IMPLEMENT inline
 void
 Mem_space::make_current()
 {
-  printf("%s FIXME\n", __PRETTY_FUNCTION__);
+    printf("(NOT IMPLEMENTED) %s in %s\n", __func__, __FILE__);
 }
 
 
@@ -114,7 +106,7 @@ PROTECTED inline
 void
 Mem_space::sync_kernel()
 {
-  printf("%s FIXME\n", __PRETTY_FUNCTION__);
+    printf("(NOT IMPLEMENTED) %s in %s\n", __func__, __FILE__);
 }
 
 
@@ -142,19 +134,21 @@ Mem_space::has_superpages()
 }
 
 //we flush tlb in htab implementation
-PUBLIC static inline NEEDS["mem_unit.h"]
+PUBLIC static inline
 void
-Mem_space::tlb_flush(bool = false)
+Mem_space::tlb_flush(bool x)
 {
-    printf("%s FIXME\n", __func__);
+    (void) x;
+    printf("(NOT IMPLEMENTED) %s in %s\n", __func__, __FILE__);
   //Mem_unit::tlb_flush();
 }
 
-PUBLIC static inline NEEDS["mem_unit.h"]
+PUBLIC static inline
 void
 Mem_space::tlb_flush_spaces(bool all, Mem_space *s1, Mem_space *s2)
 {
-
+    (void) all; (void) s1; (void) s2;
+    printf("(NOT IMPLEMENTED) %s in %s\n", __func__, __FILE__);
 }
 
 /*
@@ -191,19 +185,7 @@ PRIVATE
 void
 Mem_space::dir_shutdown()
 {
-    printf("%s FIXME\n", __func__);
-
-  // free ldt memory if it was allocated
-  //free_ldt_memory();
-
-  // free all page tables we have allocated for this address space
-  // except the ones in kernel space which are always shared
-  /*
-  _dir->alloc_cast<Mem_space_q_alloc>()
-    ->destroy(0, Kmem::mem_user_max, 0, Pdir::Depth,
-              Mem_space_q_alloc(_quota, Kmem_alloc::allocator()));
-*/
-  NOT_IMPL_PANIC;
+    printf("(NOT IMPLEMENTED) %s in %s\n", __func__, __FILE__);
 }
 
 IMPLEMENT inline
@@ -211,71 +193,36 @@ Mem_space *
 Mem_space::current_mem_space(Cpu_number cpu) /// XXX: do not fix, deprecated, remove!
 {
     printf("(NOT IMPLEMENTED) %s in %s\n", __func__, __FILE__);
-  return _current.cpu(cpu);
 }
 
-/** Insert a page-table entry, or upgrade an existing entry with new
-    attributes.
-    @param phys Physical address (page-aligned).
-    @param virt Virtual address for which an entry should be created.
-    @param size Size of the page frame -- 4KB or 4MB.
-    @param page_attribs Attributes for the mapping (see
-                        Mem_space::Page_attrib).
-    @return Insert_ok if a new mapping was created;
-             Insert_warn_exists if the mapping already exists;
-             Insert_warn_attrib_upgrade if the mapping already existed but
-                                        attributes could be upgraded;
-             Insert_err_nomem if the mapping could not be inserted because
-                              the kernel is out of memory;
-             Insert_err_exists if the mapping could not be inserted because
-                               another mapping occupies the virtual-address
-                               range
-    @pre phys and virt need to be size-aligned according to the size argument.
- */
 IMPLEMENT inline
 Mem_space::Status
 Mem_space::v_insert(Phys_addr phys, Vaddr virt, Page_order size,
 		    Attr page_attribs)
 {
-    printf("%s FIXME\n", __func__);
-  (void)phys; (void)virt; (void)page_attribs;
-  assert (cxx::get_lsb(Phys_addr(phys), size) == 0);
-  assert (cxx::get_lsb(Virt_addr(virt), size) == 0);
-/*
-  printf("v_insert: phys %08lx virt %08lx (%s) %p\n", phys, virt, 
-         page_attribs & Page_writable?"rw":"ro", this);*/
-  return Insert_err_nomem;
+    printf("(NOT IMPLEMENTED) %s in %s\n", __func__, __FILE__);
 }
 
 
-/**
- * Simple page-table lookup.
- *
- * @param virt Virtual address.  This address does not need to be page-aligned.
- * @return Physical address corresponding to a.
- */
 PUBLIC inline NEEDS ["paging.h"]
 Address
 Mem_space::virt_to_phys (Address virt) const
 {
-    printf("%s FIXME\n", __func__);
-  return dir()->virt_to_phys(virt);
+    printf("(NOT IMPLEMENTED) %s in %s\n", __func__, __FILE__);
 }
 
 PUBLIC inline
 virtual Address
 Mem_space::virt_to_phys_s0(void *a) const
 {
-    printf("%s FIXME\n", __func__);
-  return dir()->virt_to_phys((Address)a);
+    printf("(NOT IMPLEMENTED) %s in %s\n", __func__, __FILE__);
 }
 
 PUBLIC inline
 Address
 Mem_space::pmem_to_phys (Address virt) const
 {
-    printf("%s FIXME\n", __func__);
-  return virt;
+    printf("(NOT IMPLEMENTED) %s in %s\n", __func__, __FILE__);
 }
 
 
@@ -338,7 +285,8 @@ Mem_space::init_page_sizes()
 
 IMPLEMENT inline
 void
-Mem_space::v_set_access_flags(Vaddr, L4_fpage::Rights)
+Mem_space::v_set_access_flags(Vaddr va, L4_fpage::Rights)
 {
-    printf("%s FIXME\n", __func__);
+    (void) va;
+    printf("(NOT IMPLEMENTED) %s in %s\n", __func__, __FILE__);
 }
