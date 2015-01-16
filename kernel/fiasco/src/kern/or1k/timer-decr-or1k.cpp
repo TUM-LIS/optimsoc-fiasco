@@ -16,7 +16,8 @@ IMPLEMENTATION [or1k]:
 
 #include <cstdio>
 
-IMPLEMENT inline NEEDS ["decrementer.h", "kip.h", "config.h", <cstdio>]
+//IMPLEMENT inline NEEDS ["decrementer.h", "kip.h", "config.h", <cstdio>]
+IMPLEMENT //NEEDS ["decrementer.h", "kip.h", "config.h", <cstdio>]
 void
 Timer::init(Cpu_number)
 {

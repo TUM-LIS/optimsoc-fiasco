@@ -111,8 +111,7 @@ PUBLIC
 void
 Thread_object::invoke(L4_obj_ref , L4_fpage::Rights rights, Syscall_frame *f, Utcb *utcb)
 {
-	asm volatile ("l.nop"); 
-	/*
+	//asm volatile ("l.nop"); 
   register L4_obj_ref::Operation op = f->ref().op();
   if (((op != 0) && !(op & L4_obj_ref::Ipc_send))
       || (op & L4_obj_ref::Ipc_reply)
@@ -164,7 +163,6 @@ Thread_object::invoke(L4_obj_ref , L4_fpage::Rights rights, Syscall_frame *f, Ut
       f->tag(invoke_arch(f->tag(), utcb));
       return;
     }
-		*/
 }
 
 
@@ -551,8 +549,9 @@ Thread_object::ex_regs(Address ip, Address sp,
 
   if (ops & Exr_trigger_exception)
     {
-      extern char leave_by_trigger_exception[];
-      do_trigger_exception(regs(), leave_by_trigger_exception);
+        printf("leave_by_trigger_exception is called in Thread_object\n");
+      //extern char leave_by_trigger_exception[];
+      //do_trigger_exception(regs(), leave_by_trigger_exception);
     }
 
   if (ip != ~0UL)
