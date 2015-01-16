@@ -30,13 +30,13 @@ IMPLEMENT FIASCO_INIT FIASCO_NOINLINE
 void
 Startup::stage1()
 {
-  printf("\nEntering: Startup::stage1\n");
-	Mem_layout::add_pmem(Mem_layout::Ram_phys_base, Mem_layout::Map_base, 4<<20);
-  Proc::cli();
-  Boot_info::init();
-  Cpu::early_init();
-  Config::init();
-  printf("\tDone: Startup::stage1\n");
+    printf("\nEntering: Startup::stage1\n");
+    Mem_layout::add_pmem(Mem_layout::Ram_phys_base, Mem_layout::Map_base, 4<<20);
+    Proc::cli();
+    Boot_info::init();
+    Cpu::early_init();
+    Config::init();
+    printf("Done: Startup::stage1\n");
 }
 
 IMPLEMENT FIASCO_INIT FIASCO_NOINLINE
@@ -44,15 +44,14 @@ void
 Startup::stage2()
 {
   Cpu_number const boot_cpu = Cpu_number::boot_cpu();
-  printf("\tEntering: Startup::stage2\n");
-  //puts("Hello from Startup::stage2");
+  printf("Entering: Startup::stage2\n");
   Mem_space::init_page_sizes();
-  printf("\tStartup::stage2: Mem_space finished \n");
+  printf("Startup::stage2: Mem_space finished \n");
 
   Kip_init::init();
-  printf("\tStartup::stage2: Kip_init finished \n");
+  printf("Startup::stage2: Kip_init finished \n");
   Kmem_alloc::init();
-  printf("\tStartup::stage2: Kmem_alloc finished \n");
+  printf("Startup::stage2: Kmem_alloc finished \n");
 
   // Initialize cpu-local data management and run constructors for CPU 0
   Per_cpu_data::init_ctors();
@@ -61,17 +60,25 @@ Startup::stage2()
 
   //Kmem_space::init();
   Kernel_task::init();
+
+
+  //only do the stuff as the sparc leon port
+
+
   //Mem_space::kernel_space(Kernel_task::kernel_task());
+  //
+  //Pic init is not doing anything in the kern folder
   //Pic::init();
   //Thread::init_per_cpu(boot_cpu, false);
 
   //Cpu::init_mmu();
 /*  Cpu::cpus.cpu(boot_cpu).init(false, true); */
-  Cpu::cpus.cpu(boot_cpu).init(true);
-  Platform_control::init(boot_cpu);
-  Fpu::init(boot_cpu, false);
-  Ipi::init(boot_cpu);
-  Timer::init(boot_cpu);
+  //Cpu::cpus.cpu(boot_cpu).init(true);
+  //Platform_control::init(boot_cpu);
+  //Fpu::init(boot_cpu, false);
+  //Ipi::init(boot_cpu);
+  //Timer::init(boot_cpu);
+  Timer::init((Cpu_number) 0);
   //Kern_lib_page::init();
   Utcb_init::init();
   printf("Startup::stage2 finished\n");

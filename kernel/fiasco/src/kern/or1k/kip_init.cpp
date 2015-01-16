@@ -68,8 +68,8 @@ void Kip_init::init()
 
   /* add kernel image */
 	//printf("\tWhile: Kip_init::init: add region 1\n");
-  //kinfo->add_mem_region(Mem_desc(0,(Address)&Mem_layout::end - 1,
-                        //Mem_desc::Reserved));
+  kinfo->add_mem_region(Mem_desc(0,(Address)&Mem_layout::end - 1,
+                        Mem_desc::Reserved));
 
 	printf("\tWhile: Kip_init::init: add region 1\n");
   kinfo->add_mem_region(Mem_desc(0, Mem_layout::User_max - 1, 
