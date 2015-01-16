@@ -73,14 +73,15 @@ PUBLIC static
 Address
 Mem_layout::phys_to_pmem (Address addr)
 {
-	printf("phys_to_pmem\t %08lx\n", addr);
-  Address virt = ((unsigned long)__ph_to_pm[addr >> Config::SUPERPAGE_SHIFT])
-    << 16;
+	printf("phys_to_pmem\t addr: %10lx\n", addr >> Config::SUPERPAGE_SHIFT);
+  Address virt = ((unsigned long)__ph_to_pm[addr >> Config::SUPERPAGE_SHIFT]) << 16;
 	
-	return addr;
+	printf("phys_to_pmem\t virt: %10lx\n", virt);
 
   if (!virt)
+  {
     return ~0UL;
+  }
 
   return virt | (addr & (Config::SUPERPAGE_SIZE-1));
 }
@@ -93,7 +94,8 @@ Mem_layout::add_pmem(Address phys, Address virt, unsigned long size)
 	// do it page wise
 	for(;size >= Config::SUPERPAGE_SIZE; size -= Config::SUPERPAGE_SIZE)
 	{
-		printf("Mem_layout::add_pmem: added phys: %08lx to virt: %08lx\n", phys >> Config::SUPERPAGE_SHIFT, virt >> 16);
+		printf("Mem_layout::add_pmem: added phys: %10lx to virt: %10lx\n", phys >> Config::SUPERPAGE_SHIFT, virt >> 16);
+		printf("Mem_layout::add_pmem(non shortend): added phys: %10lx to virt: %10lx\n", phys, virt);
 		// only the upper bits are important
 		__ph_to_pm[phys >> Config::SUPERPAGE_SHIFT] = virt >> 16;
 		// go to next page
@@ -141,6 +143,7 @@ PUBLIC static inline
 bool
 Mem_layout::is_special_mapped(void const * /*a*/)
 {
+    printf("\x1b[31mMem_layout::is_special_mapped returns true\n\x1b[0m");
   return true;
 }
 

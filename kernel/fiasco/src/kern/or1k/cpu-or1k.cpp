@@ -68,6 +68,7 @@ IMPLEMENT
 void
 Cpu::early_init()
 {
+    printf("%s FIXME\n", __PRETTY_FUNCTION__);
 }
 
 PUBLIC static inline

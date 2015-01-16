@@ -64,5 +64,6 @@ Mword Kmem::is_kmem_page_fault(Mword pfa, Mword /*error*/)
 IMPLEMENT inline
 Mword Kmem::is_io_bitmap_page_fault( Mword /*pfa*/ )
 {
+    printf("%s FIXME\n", __PRETTY_FUNCTION__);
   return 0;
 }

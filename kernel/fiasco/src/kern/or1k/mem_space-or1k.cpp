@@ -96,6 +96,7 @@ Mem_space::Mem_space(Ram_quota *q, Dir_type* pdir)
   : _quota(q), _dir(pdir)
 {
   _kernel_space = this;
+    printf("\x1b[31mMem_space: _kernel_space: %p\n\x1b[0m", this);
   _current.cpu(Cpu_number::boot_cpu()) = this;
 }
 
@@ -103,7 +104,7 @@ IMPLEMENT inline
 void
 Mem_space::make_current()
 {
-  printf("%s FIXME\n", __func__);
+  printf("%s FIXME\n", __PRETTY_FUNCTION__);
 }
 
 
@@ -111,7 +112,7 @@ PROTECTED inline
 void
 Mem_space::sync_kernel()
 {
-  printf("%s FIXME\n", __func__);
+  printf("%s FIXME\n", __PRETTY_FUNCTION__);
 }
 
 
@@ -119,7 +120,7 @@ IMPLEMENT inline NEEDS ["kmem.h"]
 void Mem_space::switchin_context(Mem_space *from)
 {
   (void)from;
-  printf("%s FIXME\n", __func__);
+  printf("%s FIXME\n", __PRETTY_FUNCTION__);
 }
 
 PUBLIC static inline

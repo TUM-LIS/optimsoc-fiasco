@@ -17,6 +17,8 @@ Kmem_alloc::Kmem_alloc()
 	unsigned long avail_size = create_free_map(Kip::k(), &map); //map is used add available memory regions to it
 
 	printf("Available phys mem: %08lx\n", avail_size);
+	printf("alloc_size: %08ld\n", alloc_size);
+	printf("map.length(): %08ld\n", map.length());
 
 	for (int i = map.length() - 1; i >= 0 && alloc_size > 0; --i)
 	{
@@ -25,7 +27,7 @@ Kmem_alloc::Kmem_alloc()
 		if (f.size() > alloc_size)
 			f.start += (f.size() - alloc_size);
 
-		printf("  [start:%08lx - end:%08lx size:%4ld kB]\n", f.start, f.end, f.size() >> 10);
+		printf("[start:%08lx - end:%08lx size:%4ld kB]\n", f.start, f.end, f.size() >> 10);
 
 		Kip::k()->add_mem_region(Mem_desc(f.start, f.end, Mem_desc::Reserved));
 
@@ -41,6 +43,7 @@ PUBLIC inline
 Address
 Kmem_alloc::to_phys(void *v) const
 {
+    printf("\x1b[31mKmem_alloc::to_phys return ~0\n\x1b[0m");
 	// FIX
 	(void)v;
 	return ~0UL;

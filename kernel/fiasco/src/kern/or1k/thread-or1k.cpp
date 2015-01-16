@@ -162,6 +162,7 @@ Thread::Thread()
 
   inc_ref();
   _space.space(Kernel_task::kernel_task());
+  printf("\x1b[31m_space.space set to: %s \n\x1b[0m", _space.space());
 
   // set a magic value -- we use it later to verify the stack hasn't
   // been overrun

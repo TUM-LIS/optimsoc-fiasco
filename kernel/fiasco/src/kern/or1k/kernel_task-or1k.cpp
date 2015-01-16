@@ -7,4 +7,6 @@ IMPLEMENTATION[or1k]:
 PRIVATE inline NEEDS["globals.h"]
 Kernel_task::Kernel_task()
 : Task(Ram_quota::root, Kmem::kdir(), Caps::none())
-{}
+{
+    printf("%s FIXME\n", __PRETTY_FUNCTION__);
+}

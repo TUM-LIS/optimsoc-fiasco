@@ -1,6 +1,7 @@
 INTERFACE [or1k]:
 
 #include <string.h>
+#include "cstdio"
 
 EXTENSION class Config
 {
@@ -48,4 +49,6 @@ const char *const Config::kernel_warn_config_string = 0;
 IMPLEMENT FIASCO_INIT
 void
 Config::init_arch()
-{}
+{
+    printf("%s FIXME\n", __PRETTY_FUNCTION__);
+}

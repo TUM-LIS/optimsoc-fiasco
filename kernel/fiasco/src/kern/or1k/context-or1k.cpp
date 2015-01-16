@@ -19,20 +19,29 @@ IMPLEMENTATION [or1k]:
 IMPLEMENT inline
 void
 Context::spill_user_state()
-{}
+{
+    printf("%s FIXME\n", __PRETTY_FUNCTION__);
+}
 
 IMPLEMENT inline
 void
 Context::fill_user_state()
-{}
+{
+    printf("%s FIXME\n", __PRETTY_FUNCTION__);
+}
 
-PROTECTED inline void Context::arch_setup_utcb_ptr() {}
+PROTECTED inline void
+Context::arch_setup_utcb_ptr()
+{
+    printf("%s FIXME\n", __PRETTY_FUNCTION__);
+}
 
 IMPLEMENT inline
 void
 Context::switch_cpu(Context *t)
 {
-  (void)t;
+    printf("%s FIXME\n", __PRETTY_FUNCTION__);
+    (void)t;
 }
 
 /** Thread context switchin.  Called on every re-activation of a
@@ -44,5 +53,6 @@ Context::switch_cpu(Context *t)
 IMPLEMENT
 void Context::switchin_context(Context *from)
 {
+    printf("%s FIXME\n", __PRETTY_FUNCTION__);
   (void)from;
 }

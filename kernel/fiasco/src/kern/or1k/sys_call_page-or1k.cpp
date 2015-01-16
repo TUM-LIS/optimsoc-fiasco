@@ -12,5 +12,5 @@ IMPLEMENT static
 void
 Sys_call_page::init()
 {
-  printf("%s fixme\n", __func__);
+    printf("%s FIXME\n", __PRETTY_FUNCTION__);
 }
