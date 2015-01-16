@@ -1495,7 +1495,6 @@ startup(l4util_mb_info_t *mbi, l4_umword_t flag,
                "nop\n\t" : : "r"(boot_info.kernel_start));
 
 #elif defined(ARCH_or1k)
-  // TODO: The arm code looked quite matching..
   typedef void (*startup_func)(void);
   startup_func f = (startup_func)boot_info.kernel_start;
 	/*

@@ -25,11 +25,11 @@ typedef unsigned long int      Mword;
 
 enum {
   MWORD_BITS = 32,
-  ARCH_PAGE_SHIFT = 12, // XXX
+  ARCH_PAGE_SHIFT = 13, // 8 kB pages
 };
 
 /// (virtual or physical address) should be addr_t or something
-typedef unsigned long int      Address;
+typedef unsigned long int Address;
 enum Address_vals
 #ifdef __cplusplus
 : Address

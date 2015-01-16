@@ -1,5 +1,7 @@
 INTERFACE:
 
+#include <cstdio>
+
 #include "cpu_lock.h"
 
 class Spin_lock_base : protected Cpu_lock

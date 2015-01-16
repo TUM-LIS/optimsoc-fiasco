@@ -16,21 +16,19 @@ PHDRS {
 }
 
 SECTIONS {
-	. = 0x200;
+	. = 0x000;
 	.vectors : AT (ADDR(.vectors)) {
 		_vectors = .;
 		*(.vectors);
 		_evectors = .;
 	}  : vectors
 
-  . = kernel_load_addr + 0x1000;
-  /* 0x0 */
+  . = kernel_load_addr + 0x2000;
   .except : AT (0x0) {
      *(.except)
   } : etext = 0x0
-  . = ALIGN(4K) + 8K;
+  . = ALIGN(8K) + 16K;
 
-  /* 0x3000 */
   _kernel_image_start = .;
   .physmem : AT(ADDR(.physmem)) {
   } : phys = 0x0
@@ -42,8 +40,11 @@ SECTIONS {
     KEEP(*(.initkip.features))
     KEEP(*(.initkip.features.fini))
     _initkip_end = .;
-    . = ALIGN(4K);
   } : kip = 0
+
+  /* The bootloader expects the koptions on the next 4K boundary after */
+  /* the kip */
+ . = ALIGN(4K);
 
   .koptions : AT (ADDR(.koptions)) {
     *(.koptions)

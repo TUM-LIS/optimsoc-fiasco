@@ -19,19 +19,26 @@ IMPLEMENTATION [or1k]:
 IMPLEMENT inline
 void
 Context::spill_user_state()
-{}
+{
+    printf("MISSING Context::spill_user_state\n");
+}
 
 IMPLEMENT inline
 void
 Context::fill_user_state()
-{}
+{
+    printf("MISSING Context::fill_user_state\n");
+}
 
-PROTECTED inline void Context::arch_setup_utcb_ptr() {}
+PROTECTED inline void Context::arch_setup_utcb_ptr() {
+    printf("MISSING Context::arch_setup_utcb_ptr\n");
+}
 
 IMPLEMENT inline
 void
 Context::switch_cpu(Context *t)
 {
+    printf("MISSING Context::switch_cpu(%p)\n", t);
   (void)t;
 }
 
@@ -44,5 +51,6 @@ Context::switch_cpu(Context *t)
 IMPLEMENT
 void Context::switchin_context(Context *from)
 {
+    printf("MISSING Context::switchin_context(%p)\n", from);
   (void)from;
 }

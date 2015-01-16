@@ -30,49 +30,28 @@ IMPLEMENT FIASCO_INIT FIASCO_NOINLINE
 void
 Startup::stage1()
 {
-  printf("\nEntering: Startup::stage1\n");
-	Mem_layout::add_pmem(Mem_layout::Ram_phys_base, Mem_layout::Map_base, 4<<20);
   Proc::cli();
   Boot_info::init();
   Cpu::early_init();
   Config::init();
-  printf("\tDone: Startup::stage1\n");
 }
 
 IMPLEMENT FIASCO_INIT FIASCO_NOINLINE
 void
 Startup::stage2()
 {
-  Cpu_number const boot_cpu = Cpu_number::boot_cpu();
-  printf("\tEntering: Startup::stage2\n");
-  //puts("Hello from Startup::stage2");
-  Mem_space::init_page_sizes();
-  printf("\tStartup::stage2: Mem_space finished \n");
-
   Kip_init::init();
-  printf("\tStartup::stage2: Kip_init finished \n");
-  Kmem_alloc::init();
-  printf("\tStartup::stage2: Kmem_alloc finished \n");
-
-  // Initialize cpu-local data management and run constructors for CPU 0
-  Per_cpu_data::init_ctors();
-  Per_cpu_data_alloc::alloc(boot_cpu);
-  Per_cpu_data::run_ctors(boot_cpu, false);
-
-  //Kmem_space::init();
-  Kernel_task::init();
-  //Mem_space::kernel_space(Kernel_task::kernel_task());
-  //Pic::init();
-  //Thread::init_per_cpu(boot_cpu, false);
-
-  //Cpu::init_mmu();
-/*  Cpu::cpus.cpu(boot_cpu).init(false, true); */
-  Cpu::cpus.cpu(boot_cpu).init(true);
-  Platform_control::init(boot_cpu);
-  Fpu::init(boot_cpu, false);
-  Ipi::init(boot_cpu);
-  Timer::init(boot_cpu);
-  //Kern_lib_page::init();
-  Utcb_init::init();
-  printf("Startup::stage2 finished\n");
+ //init buddy allocator
+ Kmem_alloc::init();
+ // Initialize cpu-local data management and run constructors for CPU 0
+ Per_cpu_data::init_ctors();
+ // not really necessary for uni processor
+ //Per_cpu_data_alloc::alloc(0);
+ //Per_cpu_data::run_ctors();
+// Cpu::cpus.cpu(0).init(true);
+ //idle task
+ Kernel_task::init();
+// Pic::init();
+// Timer::init(0);
+ Utcb_init::init();
 }

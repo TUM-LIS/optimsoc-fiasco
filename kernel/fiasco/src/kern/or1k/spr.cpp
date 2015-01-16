@@ -2,7 +2,6 @@ INTERFACE:
 
 #include "types.h"
 
-//#include <or1k-support.h>
 #include <spr-defs.h>
 
 class Spr_Sr
@@ -41,8 +40,6 @@ PUBLIC static inline
 Mword
 Spr_Sr::read()
 {
-  //return or1k_mfspr(SPR_SR);
-
 	unsigned long value;
 	__asm__ __volatile__ ("l.mfspr\t\t%0,%1,0" : "=r" (value) : "r" (SPR_SR));
 	return value;
@@ -54,6 +51,5 @@ PUBLIC static inline
 void
 Spr_Sr::write(unsigned sr)
 {
-    //or1k_mtspr(SPR_SR, sr);
 		__asm__ __volatile__ ("l.mtspr\t\t%0,%1,0": : "r" (SPR_SR), "r" (sr));
 }

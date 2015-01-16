@@ -206,71 +206,10 @@ Pte_ptr::write_back(void *start, void *end)
 { (void)start; (void)end; }
 
 
-//---------------------------------------------------------------------------
-
-Pte_ptr context_table[16];
-Mword kernel_srmmu_l1[256] __attribute__((aligned(0x400)));
 
 PUBLIC static
 void
 Paging::init()
 {
-  Mem_desc const *md = Kip::k()->mem_descs();
-  Address memstart, memend;
-  memstart = memend = 0;
-  /*printf("MD %p, num descs %d\n", md, Kip::k()->num_mem_descs());*/
-  for (unsigned i = 0; i < Kip::k()->num_mem_descs(); ++i)
-    {
-      printf("  [%lx - %lx type %x]\n", md[i].start(), md[i].end(), md[i].type());
-      if ((memstart == 0) && md[i].type() == 1)
-        {
-          memstart = md[i].start();
-          memend   = md[i].end();
-          break;
-        }
-    }
-
-  /*
-  printf("Context table: %p - %p\n", context_table,
-         context_table + sizeof(context_table));
-  printf("Kernel PDir:   %p - %p\n", kernel_srmmu_l1,
-         kernel_srmmu_l1 + sizeof(kernel_srmmu_l1));
-  */
-  memset(context_table,   0, sizeof(context_table));
-  memset(kernel_srmmu_l1, 0, sizeof(kernel_srmmu_l1));
-  Mem_unit::context_table(Address(context_table));
-  Mem_unit::context(0);
-
-  /* PD entry for root pdir */
-#ifdef THIS_NEED_ADAPTION
-  Pd_entry root;
-  root.set(Address(kernel_srmmu_l1), false, false);
-  context_table[0] = root;
-#endif
-
-  /*
-   * Map as many 16 MB chunks (1st level page table entries)
-   * as possible.
-   */
-  unsigned superpage = 0xF0;
-  while (memend - memstart + 1 >= (1 << 24))
-    {
-#ifdef THIS_NEEDS_ADAPTION
-      Pt_entry pte;
-      pte.set(memstart, false, false, Pte_base::Cacheable | (0x3 << 2));
-      printf("pte %08x\n", pte.raw());
-
-      /* map phys mem starting from VA 0xF0000000 */
-      kernel_srmmu_l1[superpage] = pte.raw();
-      /* 1:1 mapping */
-      kernel_srmmu_l1[Pte_base::pdir(memstart)] = pte.raw();
-#endif
-
-      memstart += (1 << 24);
-      ++superpage;
-    }
-
-  Mem_unit::mmu_enable();
-
-  printf("Paging enabled...\n");
+    printf("(NOT IMPLEMENTED) %s in %s\n", __func__, __FILE__);
 }
