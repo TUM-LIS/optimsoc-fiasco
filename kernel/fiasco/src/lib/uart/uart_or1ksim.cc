@@ -137,6 +137,9 @@ namespace L4
 
   void Uart_or1ksim::out_char(char c) const
   {
+      asm __volatile__("l.addi r3,%0,0": :"r" (c) : "r3");
+      asm __volatile__("l.nop 0x4");
+      return;
 		unsigned char lsr;
 /*		do */
 /*		{ */
