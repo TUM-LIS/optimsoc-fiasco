@@ -69,12 +69,12 @@ int bootstrap_main()
    Mem_layout::add_pmem(Mem_layout::Ram_phys_base, Mem_layout::Map_base,
                         32 << 20);
 
-   Mem_unit::mmu_enable();
 
    static_construction();
     printf("Starting Bootstrapping\n");
   atexit(&static_destruction);
 	printf("Bootstrapped\n");
+	   Mem_unit::mmu_enable();
   terminate(main());
   return 0;
 }
