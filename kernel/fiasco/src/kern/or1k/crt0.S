@@ -65,7 +65,35 @@ _vector08:
 
 	.org 0x900 				/* D-TLB Miss */
 _vector09:
-	l.j _vector09
+	l.sw 0x4(r0),r1;
+	/* Load top of the exception stack */
+	l.movhi r1,hi(crt0_stack_high);
+	l.ori r1,r1,lo(crt0_stack_high);
+	/* Store GPR3 in context */
+	l.sw -8(r1),r3;
+	/* Load back software's stack pointer */
+	l.lwz r3,0x4(r0);
+	/* Store this in the context */
+	l.sw -4(r1),r3;
+	/* Store GPR4 in the context */
+	l.sw -12(r1),r4;
+	l.mfspr r3,r0,0x30
+	l.sw -16(r1), r3
+	/* Copy program counter of exception as */
+	/* second argument to the exception handler */
+	l.mfspr r4,r0,0x20
+	l.sw -20(r1), r4
+	/* Jump to exception handler. This will rfe */
+	l.jal pagefault_entry
+	l.addi r1,r1,-20
+	l.lwz r3,0(r1)
+	l.mtspr r0,r3,0x20
+	l.lwz r3,4(r1)
+	l.mtspr r0,r3,0x30
+	l.lwz r3,12(r1)
+	l.lwz r4,8(r1)
+	l.lwz r1,16(r1)
+	l.rfe
 	l.nop
 
 	.org 0xa00 				/* I-TLB Miss */

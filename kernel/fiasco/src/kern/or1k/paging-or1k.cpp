@@ -67,6 +67,15 @@ typedef Ptab::Page_addr_wrap<Page_number, Virt_addr::Shift> Ptab_va_vpn;
 //------------------------------------------------------------------------------
 IMPLEMENTATION[or1k]:
 
+extern "C" {
+
+  void pagefault_entry(const Mword pfa, const Mword pc)
+  {
+      printf("(NOT IMPLEMENTED) %s in %s\n", __func__, __FILE__);
+  }
+
+};
+
 IMPLEMENT inline
 Mword PF::addr_to_msgword0( Address pfa, Mword error )
 {

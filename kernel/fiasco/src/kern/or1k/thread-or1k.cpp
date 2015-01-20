@@ -4,16 +4,6 @@ INTERFACE [or1k]:
 
 IMPLEMENTATION [or1k]:
 
-extern "C" {
-
-  void pagefault_entry(const Mword pfa, const Mword error_code,
-                        const Mword pc, Return_frame *ret_frame)
-  {
-
-  }
-
-};
-
 /** Constructor.
     @param space the address space
     @param id user-visible thread ID of the sender

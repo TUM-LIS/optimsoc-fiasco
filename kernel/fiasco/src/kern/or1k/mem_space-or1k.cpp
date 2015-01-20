@@ -5,7 +5,7 @@ INTERFACE [or1k]:
 
 extern "C"
 void
-pagefault_entry(Address, Mword, Mword, Return_frame *);
+pagefault_entry(Mword, Mword);
 
 EXTENSION class Mem_space
 {
