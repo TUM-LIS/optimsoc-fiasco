@@ -41,7 +41,6 @@ public:
   static Address Tbuf_ubuffer_area;
 public:
   static Address phys_to_pmem(Address addr);
-  static void add_pmem(Address phys, Address virt, unsigned long size);
 
 private:
   static unsigned short __ph_to_pm[1<<(32-Config::SUPERPAGE_SHIFT)];
@@ -93,6 +92,7 @@ Mem_layout::pmem_to_phys (Address addr)
   return ~0L;
 }
 
+PUBLIC static
 void
 Mem_layout::add_pmem(Address phys, Address virt, unsigned long size)
 {
