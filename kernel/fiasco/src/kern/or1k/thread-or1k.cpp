@@ -145,3 +145,9 @@ Thread::sys_control_arch(Utcb *)
     printf("(NOT IMPLEMENTED) %s in %s\n", __func__, __FILE__);
   return 0;
 }
+
+PROTECTED inline
+L4_msg_tag
+Thread::invoke_arch(L4_msg_tag tag, Utcb *utcb)
+{
+}
